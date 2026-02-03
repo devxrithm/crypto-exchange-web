@@ -3,7 +3,7 @@ import React from "react";
 const Trade = () => {
   return (
     <>
-      <div className="w-full text-white mt-3 h-max bg-[#0b0e11] rounded-sm p-5 mb-5">
+      <div className="w-full text-white mt-2 h-max bg-[#0b0e11] rounded-sm p-5 mb-5">
         <div className="flex gap-5 text-sm font-semibold text-gray-400">
           <div className="">Open Order</div>
           <div className="">Order History</div>

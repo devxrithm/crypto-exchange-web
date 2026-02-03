@@ -14,13 +14,14 @@ export default function Home() {
           <Orderbook />
           <LivePrices />
         </div>
-        <div className="border-r border-r-gray-600 h-96"></div>
+        <div className="border-r border-r-gray-600 h-202"></div>
         <div className="">
           <div className="flex justify-around gap-2">
             <TradingViewWidget symbol={"btcusdt"} />
             <div className="border-r border-r-gray-600 h-106"></div>
             <Dashboard />
           </div>
+          <hr className="text-gray-700 mt-2" />
           <Trade />
         </div>
       </div>
