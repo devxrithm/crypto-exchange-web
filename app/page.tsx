@@ -12,11 +12,13 @@ export default function Home() {
         <Orderbook />
         <div className="border-r border-r-gray-600 h-96"></div>
         <div className="">
-        <TradingViewWidget symbol={"btcusdt"} />
-        <Trade />
+          <div className="flex justify-around gap-2">
+            <TradingViewWidget symbol={"btcusdt"} />
+            <div className="border-r border-r-gray-600 h-106"></div>
+            <Dashboard />
+          </div>
+          <Trade />
         </div>
-        <div className="border-r border-r-gray-600 h-96"></div>
-        <Dashboard />
       </div>
     </>
   );

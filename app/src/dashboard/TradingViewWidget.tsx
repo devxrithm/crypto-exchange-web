@@ -46,10 +46,7 @@ function TradingViewWidget({ symbol }) {
   }, [symbol]); // re-run when symbol changes
 
   return (
-    <div
-      className="tradingview-widget-container "
-      ref={container}
-    >
+    <div className="tradingview-widget-container mt-2 " ref={container}>
       <div className="tradingview-widget-container__widget"></div>
     </div>
   );
