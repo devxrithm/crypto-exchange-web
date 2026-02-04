@@ -5,11 +5,17 @@ import Orderbook from "@/src/components/order-book";
 import Dashboard from "@/src/components/page";
 import Trade from "@/src/components/trade";
 import TradingViewWidget from "@/src/components/TradingViewWidget";
+import Ticker from "@/src/lib/Ticker";
+import WalletContainer from "@/src/lib/wallet-container";
 
 export default function Home() {
   return (
     <>
-      <hr className="text-gray-700 mt-10" />
+      <div className="flex justify-between items-center mt-5 px-3">
+        <Ticker />
+        <WalletContainer />
+      </div>
+      <hr className="text-gray-700 mt-2" />
       <div className="flex justify-evenly">
         <div className="flex flex-col">
           <Orderbook />
