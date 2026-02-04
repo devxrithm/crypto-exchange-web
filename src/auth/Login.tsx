@@ -1,15 +1,16 @@
 import { IoIosLogIn } from "react-icons/io";
 import { MdOutlineAttachEmail } from "react-icons/md";
 import { IoLogIn } from "react-icons/io5";
+import Link from "next/link";
 
 const Login = () => {
   return (
     <div className="flex h-screen items-center justify-around text-white">
       {/* Background Image */}
 
-      <div className="flex justify-between items-center bg-[#0b0e11] rounded-4xl w-[75%] bg-[url('/bg.jpg')] bg-cover bg-center py-5">
+      <div className="flex justify-between items-center bg-[#0b0e11] rounded-4xl w-[75%] bg-[url('/bg.jpg')] bg-cover bg-center">
         <div className=""></div>
-        <div className="w-[45%] p-5 py-30 rounded-xl flex flex-col justify-items-end items-center gap-3  bg-[#12161a]">
+        <div className="w-[40%] p-5 py-28 rounded-xl flex flex-col justify-items-end items-center gap-3  bg-[#12161a]">
           <div className="p-3 bg-white text-black rounded-xl shadow-2xl shadow-amber-50">
             <IoIosLogIn size={24} />
           </div>
@@ -44,7 +45,10 @@ const Login = () => {
             <button>LOGIN</button>
           </div>
           <div className="flex mt-3 text-gray-400 text-sm">
-            <p>Not register yet ? Register now</p>
+            <p>
+              Not register yet ?{" "}
+              <Link href={"/in/auth/signup"}>Register now</Link>
+            </p>
           </div>
         </div>
       </div>
