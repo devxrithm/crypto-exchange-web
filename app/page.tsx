@@ -1,9 +1,9 @@
 // import Image from "next/image";
-import Orderbook from "./src/dashboard/components/order-book";
-import Dashboard from "./src/dashboard/components/page";
-import Trade from "./src/dashboard/components/trade";
-import TradingViewWidget from "./src/dashboard/components/TradingViewWidget";
-import LivePrices from "./src/dashboard/components/live-prices";
+import Orderbook from "../src/components/order-book";
+import Dashboard from "../src/components/page";
+import Trade from "../src/components/trade";
+import TradingViewWidget from "../src/components/TradingViewWidget";
+import LivePrices from "../src/components/live-prices";
 
 export default function Home() {
   return (
@@ -12,6 +12,7 @@ export default function Home() {
       <div className="flex justify-evenly">
         <div className="flex flex-col">
           <Orderbook />
+          <hr className="text-gray-700 mt-2" />
           <LivePrices />
         </div>
         <div className="border-r border-r-gray-600 h-202"></div>
