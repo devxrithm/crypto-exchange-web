@@ -19,7 +19,7 @@ const Signup = () => {
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero,
                 nulla.
               </p> */}
-          <div className="mt-5 border rounded-lg border-gray-600 flex items-center p-3 gap-2 w-80">
+          <div className="mt-5 border rounded-lg border-gray-600 flex items-center p-3 gap-2 w-80 bg-[#1b232b]">
             <BiSolidRename className="text-xl" />
             <input
               type="text"
@@ -29,7 +29,7 @@ const Signup = () => {
               className="outline-none w-80 text-sm"
             />
           </div>
-          <div className=" border rounded-lg border-gray-600 flex items-center p-3 gap-2 w-80">
+          <div className=" border rounded-lg border-gray-600 flex items-center p-3 gap-2 w-80 bg-[#1b232b]">
             <MdOutlineAttachEmail className="text-xl" />
             <input
               type="email"
@@ -39,7 +39,7 @@ const Signup = () => {
               className="outline-none w-80 text-sm"
             />
           </div>
-          <div className="border rounded-lg border-gray-600 flex items-center p-3 gap-2 w-80">
+          <div className="border rounded-lg border-gray-600 flex items-center p-3 gap-2 w-80 bg-[#1b232b]">
             <MdOutlinePassword className="text-xl" />
             <input
               type="password"
