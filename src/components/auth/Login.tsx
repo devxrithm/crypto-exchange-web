@@ -10,9 +10,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const LoginHandler = () => {
-    const res = api.post("/api/auth/login", { email, password });
-    return res;
+  const LoginHandler = async () => {
+    try {
+      await api.post("/api/auth/login", { email, password });
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
 
   return (

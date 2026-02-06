@@ -14,8 +14,11 @@ const Signup = () => {
   const [fullName, setFullname] = useState("");
 
   const SignupHandler = () => {
-    const res = api.post("/api/auth/signup", { email, password, fullName });
-    return res;
+    try {
+      api.post("/api/auth/signup", { email, password, fullName });
+    } catch (error) {
+      console.error("Signup error:", error);
+    }
   };
   return (
     <div className="flex h-screen items-center justify-around text-white">
