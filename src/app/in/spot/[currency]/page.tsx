@@ -1,12 +1,10 @@
-// import Image from "next/image";
-
-import LivePrices from "@/src/components/live-prices";
-import Orderbook from "@/src/components/order-book";
-import Dashboard from "@/src/components/page";
-import Trade from "@/src/components/trade";
-import TradingViewWidget from "@/src/components/TradingViewWidget";
-import Ticker from "@/src/lib/Ticker";
-import WalletContainer from "@/src/lib/wallet-container";
+import LivePrices from "@/src/components/dashboard/LivePricesTab";
+import Orderbook from "@/src/components/dashboard/OrderBook";
+import OrderBlock from "@/src/components/dashboard/OrderBlock";
+import TradeBlock from "@/src/components/dashboard/TradeBlock";
+import TradingViewWidget from "@/src/components/dashboard/TradingViewWidget";
+import Ticker from "@/src/components/dashboard/Ticker";
+import WalletContainer from "@/src/components/dashboard/WalletContainer";
 
 export default function Home() {
   return (
@@ -27,10 +25,10 @@ export default function Home() {
           <div className="flex justify-around gap-2">
             <TradingViewWidget symbol={"btcusdt"} />
             <div className="border-r border-r-gray-600 h-106"></div>
-            <Dashboard />
+            <OrderBlock />
           </div>
           <hr className="text-gray-700 mt-2" />
-          <Trade />
+          <TradeBlock />
         </div>
       </div>
     </>

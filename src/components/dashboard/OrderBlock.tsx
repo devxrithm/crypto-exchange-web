@@ -1,6 +1,6 @@
 import React from "react";
 
-const Dashboard = () => {
+const OrderBlock = () => {
   return (
     <>
       <div className="w-[32%] py-5 px-3 text-white bg-[#0b0e11] mt-2">
@@ -49,4 +49,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default OrderBlock;

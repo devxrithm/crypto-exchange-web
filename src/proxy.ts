@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-export async function middleware(request) {
+export async function proxy(request) {
   const { pathname, origin } = request.nextUrl;
 
   const accessTokenCookie = (await cookies()).get("accessToken");
   const token = accessTokenCookie ? accessTokenCookie.value : null;
   // const token = request.cookies.get("accessToken")?.value || null;
 
-  console.log(token);
+  // console.log(token);
 
   const isPublicPath =
     pathname === "/auth/login" || pathname === "/auth/signup";

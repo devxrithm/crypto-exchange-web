@@ -1,6 +1,6 @@
 import React from "react";
 
-const Trade = () => {
+const TradeBlock = () => {
   return (
     <>
       <div className="w-full text-white mt-2 h-max bg-[#0b0e11] rounded-sm p-5 mb-5">
@@ -88,4 +88,4 @@ const Trade = () => {
   );
 };
 
-export default Trade;
+export default TradeBlock;
