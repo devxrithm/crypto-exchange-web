@@ -2,7 +2,7 @@ import axios from "axios";
 // import { useRouter } from "next/navigation";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://8000-firebase-backend-exchange-hq-1770455802984.cluster-nle52mxuvfhlkrzyrq6g2cwb52.cloudworkstations.dev",
   withCredentials: true,
 });
 
@@ -31,7 +31,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await api.post("/auth/refreshToken");
+        await api.post("/api/auth/refreshToken");
         return api(originalRequest);
       } catch (refreshError) {
         return Promise.reject(refreshError);
@@ -40,4 +40,3 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-

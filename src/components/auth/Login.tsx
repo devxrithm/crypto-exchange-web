@@ -63,7 +63,7 @@ const Login = () => {
           <p className="text-gray-500 pl-44 text-sm"> Forgot Password ?</p>
           <div className=" flex items-center justify-center gap-2 bg-white text-gray-700 py-2 px-30 rounded-lg shadow-xl shadow-gray-700 font-bold cursor-pointer">
             <IoLogIn className="text-2xl" />
-            <button onClick={LoginHandler}>LOGIN</button>
+            <button onClick={LoginHandler} className="cursor-pointer">LOGIN</button>
           </div>
           {error && (
             <p className="text-red-500 text-sm border border-red-300 py-2 px-22 rounded-lg">

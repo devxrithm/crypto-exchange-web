@@ -1,7 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  allowedDevOrigins: [
+    '3000-firebase-crypto-exchange-web-1770456602740.cluster-nle52mxuvfhlkrzyrq6g2cwb52.cloudworkstations.dev',
+    '*.3000-firebase-crypto-exchange-web-1770456602740.cluster-nle52mxuvfhlkrzyrq6g2cwb52.cloudworkstations.dev',
+  ],
+}
 
-export default nextConfig;
+export default nextConfig
