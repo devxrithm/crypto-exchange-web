@@ -1,12 +1,12 @@
 import axios from "axios";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 export const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "http://localhost:3000",
   withCredentials: true,
 });
 
-axios.interceptors.request.use(async (config) => config);
+api.interceptors.request.use(async (config) => config);
 
 // config holds the data like
 //    {
@@ -22,21 +22,22 @@ axios.interceptors.request.use(async (config) => config);
 // }
 
 api.interceptors.response.use(
-  (res) => res,
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    try {
-      const router = useRouter();
-      if (error.response?.status === 401) {
-        try {
-          await api.post("/auth/refreshToken");
-          return api(originalRequest);
-        } catch {
-          router.push("/login");
-        }
+
+    // Handle token expiration
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        await api.post("/auth/refreshToken");
+        return api(originalRequest);
+      } catch (refreshError) {
+        return Promise.reject(refreshError);
       }
-    } catch (error) {
-      throw error;
     }
-  },
+    return Promise.reject(error);
+  }
 );
+

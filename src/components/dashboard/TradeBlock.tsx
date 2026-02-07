@@ -1,90 +1,95 @@
-import React from "react";
+"use client";
+import { api } from "@/src/lib/axios";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+interface OpenPosition {
+  orderId: string;
+  currencyPair: string;
+  orderQuantity: number;
+  entryPrice: number;
+  orderType: string;
+  positionStatus: string;
+  orderSide: "BUY" | "SELL";
+}
 
 const TradeBlock = () => {
-  return (
-    <>
-      <div className="w-full text-white mt-2 h-max bg-[#0b0e11] rounded-sm p-5 mb-5">
-        <div className="flex gap-5 text-sm font-semibold text-gray-400">
-          <div className="">Open Order</div>
-          <div className="">Order History</div>
-          <div className="">Trade History</div>
-          <div className="">Holding</div>
-        </div>
-        <table className="w-[80%] text-sm mt-5">
-          <thead>
-            <tr className="text-gray-500">
-              <th className="text-center min-w-34">ASSET</th>
-              <th className="text-center min-w-34">Qty</th>
-              <th className="text-center min-w-34">Entry Price</th>
-              <th className="text-center min-w-34">Order Id</th>
-              <th className="text-center min-w-34">Order Type</th>
-              <th className="text-center min-w-34">Order Status</th>
-              <th className="text-center min-w-34">Order Side</th>
-            </tr>
-          </thead>
+  const [data, setData] = useState<OpenPosition[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-          <tbody>
-            <tr>
-              <td className="h-2"></td>
-            </tr>
-            <tr className="text-gray-300 text-center text-sm bg-[#12161b]">
-              <td className="py-3">BTCUSDT</td>
-              <td className="py-3">0.15</td>
-              <td className="py-3">199.302369</td>
-              <td className="py-3">fekfewflheifnkjsdnc.kjsefiwehfkj</td>
-              <td className="py-3">Market</td>
-              <td className="py-3">Open</td>
-              <td className="py-3 text-green-300">Buy</td>
-            </tr>
-            <tr className="text-gray-300 text-center text-sm bg-[#12161b]">
-              <td className="py-3">BTCUSDT</td>
-              <td className="py-3">0.15</td>
-              <td className="py-3">199.302369</td>
-              <td className="py-3">fekfewflheifnkjsdnc.kjsefiwehfkj</td>
-              <td className="py-3">Market</td>
-              <td className="py-3">Open</td>
-              <td className="py-3 text-red-300">Sell</td>
-            </tr>
-            <tr className="text-gray-300 text-center text-sm bg-[#12161b]">
-              <td className="py-3">BTCUSDT</td>
-              <td className="py-3">0.15</td>
-              <td className="py-3">199.302369</td>
-              <td className="py-3">fekfewflheifnkjsdnc.kjsefiwehfkj</td>
-              <td className="py-3">Market</td>
-              <td className="py-3">Open</td>
-              <td className="py-3 text-green-300">Buy</td>
-            </tr>
-            <tr className="text-gray-300 text-center text-sm bg-[#12161b]">
-              <td className="py-3">BTCUSDT</td>
-              <td className="py-3">0.15</td>
-              <td className="py-3">199.302369</td>
-              <td className="py-3">fekfewflheifnkjsdnc.kjsefiwehfkj</td>
-              <td className="py-3">Market</td>
-              <td className="py-3">Open</td>
-              <td className="py-3 text-red-300">Sell</td>
-            </tr>
-            <tr className="text-gray-300 text-center text-sm bg-[#12161b]">
-              <td className="py-3">BTCUSDT</td>
-              <td className="py-3">0.15</td>
-              <td className="py-3">199.302369</td>
-              <td className="py-3">fekfewflheifnkjsdnc.kjsefiwehfkj</td>
-              <td className="py-3">Market</td>
-              <td className="py-3">Open</td>
-              <td className="py-3 text-green-300">Buy</td>
-            </tr>
-            <tr className="text-gray-300 text-center text-sm bg-[#12161b]">
-              <td className="py-3">BTCUSDT</td>
-              <td className="py-3">0.15</td>
-              <td className="py-3">199.302369</td>
-              <td className="py-3">fekfewflheifnkjsdnc.kjsefiwehfkj</td>
-              <td className="py-3">Market</td>
-              <td className="py-3">Open</td>
-              <td className="py-3 text-red-300">Sell</td>
-            </tr>
-          </tbody>
-        </table>
+  useEffect(() => {
+    const fetchOpenPositions = async () => {
+      try {
+        const res = await api.get("/api/order/openPositions");
+        setData(res.data.data);
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          setError(err.response?.data?.message || "Failed to load orders");
+        } else {
+          setError("Something went wrong");
+        }
+      }
+    };
+
+    fetchOpenPositions();
+  }, []);
+
+  return (
+    <div className="w-full text-white mt-2 bg-[#0b0e11] rounded-sm p-5 mb-5">
+      <div className="flex gap-5 text-sm font-semibold text-gray-400">
+        <div>Open Order</div>
+        <div>Order History</div>
+        <div>Trade History</div>
+        <div>Holding</div>
       </div>
-    </>
+
+      {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+
+      <table className="w-[80%] text-sm mt-5">
+        <thead>
+          <tr className="text-gray-500 text-center">
+            <th className="min-w-34">ASSET</th>
+            <th className="min-w-34">Qty</th>
+            <th className="min-w-34">Entry Price</th>
+            <th className="min-w-34">Order Id</th>
+            <th className="min-w-34">Order Type</th>
+            <th className="min-w-34">Status</th>
+            <th className="min-w-34">Side</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {data.length === 0 && !error && (
+            <tr>
+              <td colSpan={7} className="text-center py-6 text-gray-500">
+                No open positions
+              </td>
+            </tr>
+          )}
+
+          {data.map((order) => (
+            <tr
+              key={order.orderId}
+              className="text-gray-300 text-center bg-[#12161b] text-sm"
+            >
+              <td className="py-3">{order.currencyPair}</td>
+              <td className="py-3">{order.orderQuantity.toFixed(6)}</td>
+              <td className="py-3">{order.entryPrice}</td>
+              <td className="py-3">{order.orderId}</td>
+              <td className="py-3">{order.orderType}</td>
+              <td className="py-3">{order.positionStatus}</td>
+              <td
+                className={`py-3 ${
+                  order.orderSide === "BUY" ? "text-green-400" : "text-red-400"
+                }`}
+              >
+                {order.orderSide}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

@@ -7,17 +7,23 @@ import { BiSolidRename } from "react-icons/bi";
 import Link from "next/link";
 import { api } from "@/src/lib/axios";
 import { useState } from "react";
+import axios from "axios";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullname] = useState("");
+  const [error, setError] = useState("");
 
-  const SignupHandler = () => {
+  const SignupHandler = async () => {
     try {
-      api.post("/api/auth/signup", { email, password, fullName });
+      await api.post("/api/auth/signup", { email, password, fullName });
     } catch (error) {
-      console.error("Signup error:", error);
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.message || "Signup failed");
+      } else {
+        setError("Something went wrong");
+      }
     }
   };
   return (
@@ -66,12 +72,15 @@ const Signup = () => {
             />
           </div>
           <p className="text-gray-500 pl-44 text-sm"> Forgot Password ?</p>
-          <Link href={"/in/auth/login"}>
-            <div className=" flex items-center justify-center gap-2 bg-white text-gray-700 py-2 px-30 rounded-lg shadow-xl shadow-gray-700 font-bold">
-              <IoLogIn className="text-2xl" />
-              <button onClick={SignupHandler}>Signup</button>
-            </div>
-          </Link>
+          <div className=" flex items-center justify-center gap-2 bg-white text-gray-700 py-2 px-30 rounded-lg shadow-xl shadow-gray-700 font-bold">
+            <IoLogIn className="text-2xl" />
+            <button onClick={SignupHandler}>Signup</button>
+          </div>
+          {error && (
+            <p className="text-red-500 text-sm border border-red-300 py-2 px-22 rounded-lg">
+              {error}
+            </p>
+          )}
           <div className="flex mt-3 text-gray-400 text-sm">
             <p>
               Already register ? <Link href={"/in/auth/login"}>Login now </Link>
