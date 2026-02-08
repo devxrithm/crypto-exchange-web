@@ -14,8 +14,7 @@ const WalletContainer = () => {
       try {
         const res = await api.get("/api/wallet/getuserbalance/USDT");
         const res2 = await api.get("/api/wallet/getuserbalance/ETHUSDT");
-        console.log(res.data.data);
-        setBalance(res.data.data);
+        setBalance(Number(res.data.data));
         setTokenBalance(res2.data.data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -37,11 +36,11 @@ const WalletContainer = () => {
         </div>
         <div className="py-3 px-4 rounded-sm bg-[#0b0e11] flex flex-col justify-center items-right">
           <p className="text-sm text-gray-300 ">USDT Wallet</p>
-          <p className="font-bold text-gray-200">$ {balance || error}</p>
+          <p className="font-bold text-gray-200">$ {balance.toFixed(2) || 0}</p>
         </div>
         <div className="py-3 px-4  rounded-sm bg-[#0b0e11] flex flex-col justify-center items-right ">
           <p className="text-sm text-gray-300">ETH Wallet</p>
-          <p className="font-bold text-gray-200">{tokenBalance || error} </p>
+          <p className="font-bold text-gray-200">{tokenBalance || 0} </p>
         </div>
       </div>
     </>

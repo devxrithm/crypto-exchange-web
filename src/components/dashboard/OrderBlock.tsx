@@ -1,13 +1,43 @@
 "use client"
+import { api } from "@/src/lib/axios";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
+let success: string ="false";
 const OrderBlock = () => {
   const [state, setState] = useState("BUY")
+  const [amount,setAmount]=useState<number>(0)
+  const [error,setError]=useState("")
+  // const [success,setSuccess]=useState("")
+
+  const params = useParams();
+
+  const buyHandler=async()=>{
+    try {
+      const res = await api.post("/api/order/buyorder",{
+        currencyPair:params.currency,
+        orderSide:'BUY',
+        orderType:'Market',
+        entryPrice:3000,
+        positionStatus:'Open',
+        orderAmount:amount
+      })
+      success="true"
+      console.log(res.data.data)
+    } catch (error) {
+      
+    }
+    setState("BUY")
+  }
+  const sellHandler=()=>{
+    setState("SELL")
+  }
+
   return (
     <>
       {
         state === "BUY" ?
-          <div className="w-[32%] py-5 px-3 text-white bg-[#0b0e11] mt-2">
+          <div className="min-w-[32%] py-5 px-3 text-white bg-[#0b0e11] mt-2">
             <h1 className="">Exchange / Spot</h1>
             <hr className="text-gray-700 mt-1" />
             <div className="text-white text-xs flex justify-around items-center border border-gray-700 mt-5 rounded-sm">
@@ -32,6 +62,8 @@ const OrderBlock = () => {
                   type="number"
                   placeholder="Total"
                   className="p-3 text-gray-300 outline-none w-64"
+                  value={amount}
+                  onChange={(e)=>setAmount(Number(e.target.value))}
                 />
                 <p className="text-white font-semibold p-3">USDT</p>
               </div>
@@ -46,7 +78,7 @@ const OrderBlock = () => {
               <p className="">32500 USDT</p>
             </div>
             <div className="flex justify-evenly items-center gap-1 mt-5">
-              <button className="bg-emerald-500 py-3 w-full rounded-sm text-white font-semibold hover:scale-105 cursor-pointer text-sm">
+              <button onClick={buyHandler} className="bg-emerald-500 py-3 w-full rounded-sm text-white font-semibold hover:scale-105 cursor-pointer text-sm">
                 BUY
               </button>
             </div>
@@ -89,7 +121,7 @@ const OrderBlock = () => {
               <p className="">32500 USDT</p>
             </div>
             <div className="flex justify-evenly items-center gap-1 mt-5">
-              <button className="bg-red-500 py-3 w-full rounded-sm text-white font-semibold hover:scale-105 cursor-pointer text-sm">
+              <button onClick={sellHandler} className="bg-red-500 py-3 w-full rounded-sm text-white font-semibold hover:scale-105 cursor-pointer text-sm">
                 SELL
               </button>
             </div>
@@ -99,5 +131,7 @@ const OrderBlock = () => {
     </>
   );
 };
-
+export const message=()=>{
+  return String(success);
+}
 export default OrderBlock;

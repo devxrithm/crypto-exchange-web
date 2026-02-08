@@ -1,7 +1,9 @@
 "use client";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import {message} from "./OrderBlock"
+
 
 interface OpenPosition {
   orderId: string;
@@ -23,6 +25,7 @@ const TradeBlock = () => {
       try {
         const res = await api.get("/api/order/openPositions");
         setData(res.data.data);
+        console.log(res.data)
       } catch (err) {
         if (axios.isAxiosError(err)) {
           setError(err.response?.data?.message || "Failed to load orders");
@@ -33,8 +36,12 @@ const TradeBlock = () => {
     };
 
     fetchOpenPositions();
-  }, []);
+  //   const interval = setInterval(fetchOpenPositions, 2000); // every 2 sec
 
+  // return () => clearInterval(interval);
+  },[message]);
+  const val = message
+console.log(val)
   return (
     <div className="w-full text-white mt-2 bg-[#0b0e11] rounded-sm p-5 mb-5">
       <div className="flex gap-5 text-sm font-semibold text-gray-400">
@@ -44,16 +51,16 @@ const TradeBlock = () => {
         <div>Holding</div>
       </div>
 
-      <table className="w-[80%] text-sm mt-5">
+      <table className="w-full px-5 text-sm mt-5">
         <thead>
           <tr className="text-gray-500 text-center">
-            <th className="min-w-34">ASSET</th>
-            <th className="min-w-34">Qty</th>
-            <th className="min-w-34">Entry Price</th>
+            <th className="min-w-28">ASSET</th>
+            <th className="min-w-28">Qty</th>
+            <th className="min-w-28">Entry Price</th>
             <th className="min-w-34">Order Id</th>
-            <th className="min-w-34">Order Type</th>
-            <th className="min-w-34">Status</th>
-            <th className="min-w-34">Side</th>
+            <th className="min-w-28">Order Type</th>
+            <th className="min-w-28">Status</th>
+            <th className="min-w-28">Side</th>
           </tr>
         </thead>
 
@@ -65,16 +72,26 @@ const TradeBlock = () => {
               </td>
             </tr>
           )}
-
-        </tbody>
-        <tbody>
+ <tr
+             
+             className="text-gray-300 text-center  text-sm "
+           >
+             <td className="py-1"></td>
+             <td className="py-1"></td>
+             <td className="py-1"></td>
+             <td className="py-1"></td>
+             <td className="py-1"></td>
+             <td className="py-1"></td>
+             <td className="py-1"></td>
+     
+           </tr>
           {data.map((order) => (
             <tr
-              key={order._id}
-              className="text-gray-300 text-center bg-[#12161b] text-sm"
+              key={order.orderId}
+              className="text-gray-300 text-center bg-[#12161b] text-sm "
             >
               <td className="py-3">{order.currencyPair}</td>
-              <td className="py-3">{order.orderQuantity}</td>
+              <td className="py-3">{Number(order.orderQuantity).toFixed(6)}</td>
               <td className="py-3">{order.entryPrice}</td>
               <td className="py-3">{order.orderId}</td>
               <td className="py-3">{order.orderType}</td>
@@ -87,6 +104,7 @@ const TradeBlock = () => {
               </td>
             </tr>
           ))}
+         
         </tbody>
       </table>
     </div>

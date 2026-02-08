@@ -3,7 +3,7 @@ import React from "react";
 const Orderbook = () => {
   return (
     <>
-      <div className="px-3 py-5 h-max text-white bg-[#0b0e11]  mt-2 rounded-sm">
+      <div className="min-w-auto px-2  py-5 h-max text-white bg-[#0b0e11]  mt-2 rounded-sm">
         <h1 className="mx-3">Orderbook</h1>
         <hr className="text-gray-700 mt-2 mx-2" />
         <div className="flex justify-center">

@@ -3,7 +3,7 @@ import React from "react";
 const LivePrices = () => {
   return (
     <>
-      <div className="px-2 py-4 h-max text-white bg-[#0b0e11] mt-2 rounded-sm ">
+      <div className="min-w-auto px-2 py-4 h-max text-white bg-[#0b0e11] mt-2 rounded-sm ">
         <h1 className="mx-3">Asset Prices</h1>
         <hr className="text-gray-700 mx-3 mt-2" />
         <div className="flex  justify-center mt-3">
