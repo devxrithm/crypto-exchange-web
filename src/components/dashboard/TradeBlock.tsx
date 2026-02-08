@@ -1,7 +1,7 @@
 "use client";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 
 interface OpenPosition {
   orderId: string;
@@ -11,6 +11,7 @@ interface OpenPosition {
   orderType: string;
   positionStatus: string;
   orderSide: "BUY" | "SELL";
+  _id: string;
 }
 
 const TradeBlock = () => {
@@ -43,8 +44,6 @@ const TradeBlock = () => {
         <div>Holding</div>
       </div>
 
-      {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
-
       <table className="w-[80%] text-sm mt-5">
         <thead>
           <tr className="text-gray-500 text-center">
@@ -67,21 +66,22 @@ const TradeBlock = () => {
             </tr>
           )}
 
+        </tbody>
+        <tbody>
           {data.map((order) => (
             <tr
-              key={order.orderId}
+              key={order._id}
               className="text-gray-300 text-center bg-[#12161b] text-sm"
             >
               <td className="py-3">{order.currencyPair}</td>
-              <td className="py-3">{order.orderQuantity.toFixed(6)}</td>
+              <td className="py-3">{order.orderQuantity}</td>
               <td className="py-3">{order.entryPrice}</td>
               <td className="py-3">{order.orderId}</td>
               <td className="py-3">{order.orderType}</td>
               <td className="py-3">{order.positionStatus}</td>
               <td
-                className={`py-3 ${
-                  order.orderSide === "BUY" ? "text-green-400" : "text-red-400"
-                }`}
+                className={`py-3 ${order.orderSide === "BUY" ? "text-green-400" : "text-red-400"
+                  }`}
               >
                 {order.orderSide}
               </td>

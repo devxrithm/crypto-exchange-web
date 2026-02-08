@@ -1,5 +1,7 @@
-import React from "react";
+import WalletDashboard from "@/src/components/wallet/WalletDashboard";
 
-export const page = () => {
-  return <div>WALLET</div>;
+const Wallet = () => {
+  return (<WalletDashboard/>);
 };
+
+export default Wallet

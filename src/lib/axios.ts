@@ -2,7 +2,7 @@ import axios from "axios";
 // import { useRouter } from "next/navigation";
 
 export const api = axios.create({
-  baseURL: "https://8000-firebase-backend-exchange-hq-1770455802984.cluster-nle52mxuvfhlkrzyrq6g2cwb52.cloudworkstations.dev",
+  baseURL: process.env.NEXT_PUBLIC_URL,
   withCredentials: true,
 });
 

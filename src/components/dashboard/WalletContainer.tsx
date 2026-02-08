@@ -37,7 +37,7 @@ const WalletContainer = () => {
         </div>
         <div className="py-3 px-4 rounded-sm bg-[#0b0e11] flex flex-col justify-center items-right">
           <p className="text-sm text-gray-300 ">USDT Wallet</p>
-          <p className="font-bold text-gray-200">{balance || error}</p>
+          <p className="font-bold text-gray-200">$ {balance || error}</p>
         </div>
         <div className="py-3 px-4  rounded-sm bg-[#0b0e11] flex flex-col justify-center items-right ">
           <p className="text-sm text-gray-300">ETH Wallet</p>
