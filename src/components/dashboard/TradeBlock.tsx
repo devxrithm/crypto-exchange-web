@@ -1,9 +1,9 @@
 "use client";
+import { resetOrderChange } from "@/src/context/features/orderSlice";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {message} from "./OrderBlock"
-
+import { useDispatch, useSelector } from "react-redux";
 
 interface OpenPosition {
   orderId: string;
@@ -19,7 +19,12 @@ interface OpenPosition {
 const TradeBlock = () => {
   const [data, setData] = useState<OpenPosition[]>([]);
   const [error, setError] = useState<string | null>(null);
-
+  const isChanging = useSelector((state: any) => state.order.isChanging)
+  const datas = useSelector((state: any) => state.order.data)
+  // uses
+  const dispatch = useDispatch()
+  console.log("redux", isChanging)
+  console.log("redux", datas)
   useEffect(() => {
     const fetchOpenPositions = async () => {
       try {
@@ -33,15 +38,14 @@ const TradeBlock = () => {
           setError("Something went wrong");
         }
       }
+        finally {
+          dispatch(resetOrderChange());
+        }
     };
 
     fetchOpenPositions();
-  //   const interval = setInterval(fetchOpenPositions, 2000); // every 2 sec
+  }, [isChanging,dispatch]);
 
-  // return () => clearInterval(interval);
-  },[message]);
-  const val = message
-console.log(val)
   return (
     <div className="w-full text-white mt-2 bg-[#0b0e11] rounded-sm p-5 mb-5">
       <div className="flex gap-5 text-sm font-semibold text-gray-400">
@@ -72,19 +76,19 @@ console.log(val)
               </td>
             </tr>
           )}
- <tr
-             
-             className="text-gray-300 text-center  text-sm "
-           >
-             <td className="py-1"></td>
-             <td className="py-1"></td>
-             <td className="py-1"></td>
-             <td className="py-1"></td>
-             <td className="py-1"></td>
-             <td className="py-1"></td>
-             <td className="py-1"></td>
-     
-           </tr>
+          <tr
+
+            className="text-gray-300 text-center  text-sm "
+          >
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+
+          </tr>
           {data.map((order) => (
             <tr
               key={order.orderId}
@@ -104,7 +108,7 @@ console.log(val)
               </td>
             </tr>
           ))}
-         
+
         </tbody>
       </table>
     </div>

@@ -16,6 +16,7 @@ const WalletContainer = () => {
         const res2 = await api.get("/api/wallet/getuserbalance/ETHUSDT");
         setBalance(Number(res.data.data));
         setTokenBalance(res2.data.data);
+        console.log(res.data.data)
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.response?.data?.message || "Login failed");

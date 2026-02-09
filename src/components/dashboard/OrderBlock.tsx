@@ -1,20 +1,22 @@
 "use client"
+import { changeOrder } from "@/src/context/features/orderSlice";
 import { api } from "@/src/lib/axios";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 let success: string ="false";
 const OrderBlock = () => {
   const [state, setState] = useState("BUY")
   const [amount,setAmount]=useState<number>(0)
   const [error,setError]=useState("")
-  // const [success,setSuccess]=useState("")
 
+const dispatch =useDispatch()
   const params = useParams();
 
   const buyHandler=async()=>{
     try {
-      const res = await api.post("/api/order/buyorder",{
+      await api.post("/api/order/buyorder",{
         currencyPair:params.currency,
         orderSide:'BUY',
         orderType:'Market',
@@ -22,8 +24,7 @@ const OrderBlock = () => {
         positionStatus:'Open',
         orderAmount:amount
       })
-      success="true"
-      console.log(res.data.data)
+      dispatch(changeOrder())
     } catch (error) {
       
     }
