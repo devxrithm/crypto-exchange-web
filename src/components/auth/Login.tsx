@@ -5,10 +5,10 @@ import { IoLogIn } from "react-icons/io5";
 import Link from "next/link";
 import { useState } from "react";
 import { api } from "@/src/lib/axios";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import axios from "axios";
 
-const Login = () => {
+const Login =  () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

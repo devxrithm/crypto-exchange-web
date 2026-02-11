@@ -1,36 +1,40 @@
 "use client"
 import { changeOrder } from "@/src/context/features/orderSlice";
 import { api } from "@/src/lib/axios";
+import axios from "axios";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-let success: string ="false";
+let success: string = "false";
 const OrderBlock = () => {
   const [state, setState] = useState("BUY")
-  const [amount,setAmount]=useState<number>(0)
-  const [error,setError]=useState("")
+  const [amount, setAmount] = useState<number>(0)
+  const [error, setError] = useState("")
 
-const dispatch =useDispatch()
+  const dispatch = useDispatch()
   const params = useParams();
 
-  const buyHandler=async()=>{
+  const buyHandler = async () => {
     try {
-      await api.post("/api/order/buyorder",{
-        currencyPair:params.currency,
-        orderSide:'BUY',
-        orderType:'Market',
-        entryPrice:3000,
-        positionStatus:'Open',
-        orderAmount:amount
+      await api.post("/api/order/buyorder", {
+        currencyPair: params.currency,
+        orderSide: 'BUY',
+        orderType: 'Market',
+        entryPrice: 3000,
+        positionStatus: 'Open',
+        orderAmount: amount
       })
       dispatch(changeOrder())
     } catch (error) {
-      
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.message || "Login failed");
+      } else {
+        setError("Something went wrong");
+      }
     }
-    setState("BUY")
   }
-  const sellHandler=()=>{
+  const sellHandler = () => {
     setState("SELL")
   }
 
@@ -64,7 +68,7 @@ const dispatch =useDispatch()
                   placeholder="Total"
                   className="p-3 text-gray-300 outline-none w-64"
                   value={amount}
-                  onChange={(e)=>setAmount(Number(e.target.value))}
+                  onChange={(e) => setAmount(Number(e.target.value))}
                 />
                 <p className="text-white font-semibold p-3">USDT</p>
               </div>
@@ -132,7 +136,7 @@ const dispatch =useDispatch()
     </>
   );
 };
-export const message=()=>{
+export const message = () => {
   return String(success);
 }
 export default OrderBlock;

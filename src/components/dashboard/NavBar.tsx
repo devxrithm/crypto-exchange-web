@@ -19,8 +19,12 @@ const NavBar = () => {
                     </Link>
                 </ul>
                 <ul className='flex justify-center item-center gap-3'>
-                    <div className="bg-[#0b0e11] w-34 text-center p-2 rounded-xl">Login</div>
-                    <div className="bg-[#0b0e11] w-34 text-center p-2 rounded-xl">Signup</div>
+                    <Link href={'/in/auth/login'}>
+                        <div className="bg-[#0b0e11] w-34 text-center p-2 rounded-xl">Login</div>
+                    </Link>
+                    <Link href={'/in/auth/signup'}>
+                        <div className="bg-[#0b0e11] w-34 text-center p-2 rounded-xl">Signup</div>
+                    </Link>
                 </ul>
             </nav>
         </div>
