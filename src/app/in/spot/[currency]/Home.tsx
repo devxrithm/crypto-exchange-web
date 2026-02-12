@@ -11,6 +11,7 @@ import { store } from "@/src/context/store";
 import { useState } from "react";
 import OrderHistory from "@/src/components/dashboard/TradeContainer/OrderHistory";
 import OpenOrder from "@/src/components/dashboard/TradeContainer/OpenOrder";
+import TradeHistory from "@/src/components/dashboard/TradeContainer/TradeHistory";
 
 export default function Home() {
 
@@ -84,6 +85,7 @@ export default function Home() {
 
                             {activeTab === "OPEN_ORDER" && <OpenOrder />}
                             {activeTab === "ORDER_HISTORY" && <OrderHistory />}
+                            {activeTab === "TRADE_HISTORY" && <TradeHistory />}
                         </div>
                     </div>
                 </div >
