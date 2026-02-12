@@ -4,19 +4,9 @@ import { api } from "@/src/lib/axios";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { OpenPosition } from "@/src/lib/types";
 
-interface OpenPosition {
-  orderId: string;
-  currencyPair: string;
-  orderQuantity: number;
-  entryPrice: number;
-  orderType: string;
-  positionStatus: string;
-  orderSide: "BUY" | "SELL";
-  _id: string;
-}
-
-const TradeBlock = () => {
+const OpenOrder = () => {
   const [data, setData] = useState<OpenPosition[]>([]);
   const [error, setError] = useState<string | null>(null);
   const isChanging = useSelector((state: any) => state.order.isChanging)
@@ -106,4 +96,4 @@ const TradeBlock = () => {
   );
 };
 
-export default TradeBlock;
+export default OpenOrder;

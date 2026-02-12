@@ -3,11 +3,15 @@
 import { api } from "@/src/lib/axios";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const WalletContainer = () => {
   const [balance, setBalance] = useState(0);
   const [tokenBalance, setTokenBalance] = useState(0);
   const [error, setError] = useState("");
+
+  const isChanging = useSelector((state: any) => state.order.isChanging)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -15,7 +19,7 @@ const WalletContainer = () => {
         const res = await api.get("/api/wallet/getuserbalance/USDT");
         const res2 = await api.get("/api/wallet/getuserbalance/ETHUSDT");
         setBalance(Number(res.data.data));
-        setTokenBalance(res2.data.data);
+        setTokenBalance(Number(res2.data.data));
         console.log(res.data.data)
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -26,7 +30,7 @@ const WalletContainer = () => {
       }
     };
     fetchBalance();
-  }, [balance, tokenBalance]);
+  }, [isChanging, dispatch]);
 
   return (
     <>

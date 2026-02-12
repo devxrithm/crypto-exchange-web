@@ -3,15 +3,14 @@
 import LivePrices from "@/src/components/dashboard/LivePricesTab";
 import Orderbook from "@/src/components/dashboard/OrderBook";
 import OrderBlock from "@/src/components/dashboard/OrderBlock";
-import TradeBlock from "@/src/components/dashboard/TradeContainer/TradeBlock";
 import TradingViewWidget from "@/src/components/dashboard/TradingViewWidget";
 import Ticker from "@/src/components/dashboard/Ticker";
 import WalletContainer from "@/src/components/dashboard/WalletContainer";
-import { useParams } from "next/navigation";
 import { Provider } from "react-redux";
 import { store } from "@/src/context/store";
 import { useState } from "react";
 import OrderHistory from "@/src/components/dashboard/TradeContainer/OrderHistory";
+import OpenOrder from "@/src/components/dashboard/TradeContainer/OpenOrder";
 
 export default function Home() {
 
@@ -83,7 +82,7 @@ export default function Home() {
                                 </button>
                             </div>
 
-                            {activeTab === "OPEN_ORDER" && <TradeBlock />}
+                            {activeTab === "OPEN_ORDER" && <OpenOrder />}
                             {activeTab === "ORDER_HISTORY" && <OrderHistory />}
                         </div>
                     </div>
