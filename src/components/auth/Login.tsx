@@ -1,84 +1,165 @@
 "use client";
-import { IoIosLogIn } from "react-icons/io";
-import { MdOutlineAttachEmail } from "react-icons/md";
-import { IoLogIn } from "react-icons/io5";
-import Link from "next/link";
-import { useState } from "react";
-import { api } from "@/src/lib/axios";
-import { redirect, useRouter } from "next/navigation";
-import axios from "axios";
 
-const Login =  () => {
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { api } from "@/src/lib/axios";
+import { IoMdLogIn } from "react-icons/io";
+import { CiLogin } from "react-icons/ci";
+import { RiLoader2Fill } from "react-icons/ri";
+import { MdEmail } from "react-icons/md";
+import { MdOutlinePassword } from "react-icons/md";
+
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const LoginHandler = async () => {
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    setError("");
+    setLoading(true);
     try {
       await api.post("/api/auth/login", { email, password });
       router.push("/in/spot/btcusdt");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setError(error.response?.data?.message || "Login failed");
+        setError(error.response?.data?.message || "Login failed. Please try again.");
       } else {
-        setError("Something went wrong");
+        setError("Something went wrong. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex h-screen items-center justify-around text-white">
-      <div className="flex justify-between items-center bg-[#0b0e11] rounded-4xl w-[75%] bg-[url('/bg.jpg')] bg-cover bg-center">
-        <div className=""></div>
-        <div className="w-[40%] p-5 py-28 rounded-xl flex flex-col justify-items-end items-center gap-3  bg-[#12161a]">
-          <div className="p-3 bg-white text-black rounded-xl shadow-2xl shadow-amber-50">
-            <IoIosLogIn size={24} />
+    <div
+      className="min-h-screen flex items-center justify-center px-4 bg-black text-slate-50"
+    >
+      <div
+        className="w-full max-w-sm rounded-xl p-8 bg-gray-950 border border-slate-800"
+      >
+        <div className="mb-8 text-center">
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg mb-4 bg-slate-50 text-blue-950"
+          >
+           <IoMdLogIn className="text-3xl"/>
+
           </div>
-          <h1 className="text-xl font-semibold ">Login with email</h1>
-          <div className="mt-5 border rounded-lg border-gray-600 flex items-center p-3 gap-2 w-80 bg-[#1b232b]">
-            <MdOutlineAttachEmail className="text-xl" />
-            <input
-              type="email"
-              name=""
-              id=""
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="outline-none w-80 text-sm"
-            />
-          </div>
-          <div className="border rounded-lg border-gray-600 flex items-center p-3 gap-2 w-80 bg-[#1b232b]">
-            <MdOutlineAttachEmail className="text-xl" />
-            <input
-              type="password"
-              name=""
-              id=""
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="outline-none w-80 text-sm"
-            />
-          </div>
-          <p className="text-gray-500 pl-44 text-sm"> Forgot Password ?</p>
-          <div className=" flex items-center justify-center gap-2 bg-white text-gray-700 py-2 px-30 rounded-lg shadow-xl shadow-gray-700 font-bold cursor-pointer">
-            <IoLogIn className="text-2xl" />
-            <button onClick={LoginHandler} className="cursor-pointer">LOGIN</button>
-          </div>
-          {error && (
-            <p className="text-red-500 text-sm border border-red-300 py-2 px-22 rounded-lg">
-              {error}
-            </p>
-          )}
-          <div className="flex mt-3 text-gray-400 text-sm">
-            <p>
-              Not register yet ?{" "}
-              <Link href={"/in/auth/signup"}>Register now</Link>
-            </p>
-          </div>
+          <h1
+            className="text-xl font-semibold tracking-tight text-slate-50"
+          >
+            Welcome back
+          </h1>
+          <p className="text-sm mt-1 text-slate-400">
+            Sign in to your account
+          </p>
         </div>
+
+        <div className="flex flex-col gap-3" >
+          <div>
+            <label
+              className="block text-xs font-medium mb-1.5 text-slate-400"
+            >
+              Email address
+            </label>
+            <div
+              className="flex items-center gap-2.5 rounded-md px-3 py-2.5 transition-colors bg-slate-900 border border-slate-800"
+            >
+              <MdEmail className="text-gray-500"/>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-600 text-slate-50"
+                autoComplete="email"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label
+                className="text-xs font-medium text-slate-400"
+              >
+                Password
+              </label>
+              <Link
+                href="/in/auth/forgot-password"
+                className="text-xs transition-colors text-slate-500"
+              >
+                Forgot password?
+              </Link>
+            </div>
+            <div
+              className="flex items-center gap-2.5 rounded-md px-3 py-2.5 transition-colors bg-slate-900 border border-slate-800"
+            >
+             <MdOutlinePassword />
+
+              <input
+                type="password"
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-600 text-slate-50"
+                autoComplete="current-password"
+              />
+            </div>
+          </div>
+
+          {error && (
+            <div
+              className="flex items-center gap-2 rounded-md px-3 py-2.5 text-xs bg-[hsl(0_72.2%_50.6%_/_0.1)] border border-[hsl(0_72.2%_50.6%_/_0.3)] text-[hsl(0_72.2%_65%)]"
+            >
+              <RiLoader2Fill />
+              {error}
+            </div>
+          )}
+
+          <button
+            onClick={LoginHandler}
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 rounded-md py-2.5 text-sm font-semibold transition-opacity mt-1 disabled:opacity-60 disabled:cursor-not-allowed bg-slate-50 text-blue-950"
+          >
+            {loading ? (
+              <>
+                <RiLoader2Fill />
+                Signing in…
+              </>
+            ) : (
+              <>
+                <CiLogin className="text-2xl"/>
+                Sign in
+              </>
+            )}
+          </button>
+        </div>
+
+        <div className="flex items-center gap-3 my-6">
+          <div className="flex-1 h-px bg-slate-800" />
+          <span className="text-xs text-slate-600">or</span>
+          <div className="flex-1 h-px bg-slate-800" />
+        </div>
+
+        <p className="text-center text-xs text-slate-500">
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/in/auth/signup"
+            className="font-medium transition-colors text-slate-50"
+          >
+            Register now
+          </Link>
+        </p>
       </div>
     </div>
   );
 };
+
 export default Login;
