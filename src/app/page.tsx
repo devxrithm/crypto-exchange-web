@@ -98,35 +98,17 @@ const page = () => {
 
   return (
     <div
-      className="min-h-screen text-sm mt-5
-      "
-      style={{
-        background: '#000000',
-        color: 'hsl(210 20% 98%)',
-        fontFamily: "'Geist', 'Inter', system-ui, sans-serif",
-      }}
+      className="min-h-screen font-sans text-sm mt-5 bg-black"
     >
       <section className="relative overflow-hidden">
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-20 pointer-events-none"
-          style={{
-            background: 'radial-gradient(ellipse at center, hsl(215 20.2% 65.1% / 0.3) 0%, transparent 70%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-5"
-          style={{ backgroundImage: "url('/close-up-hand-bitcoin-concept.jpg')" }}
+          className="absolute inset-0 bg-cover bg-center opacity-10 bg-[url('/close-up-hand-bitcoin-concept.jpg')]"
         />
 
         <div className="relative max-w-4xl mx-auto px-6 pt-20 pb-24 text-center">
           <div className="inline-flex items-center gap-2 mb-6">
             <span
-              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
-              style={{
-                background: 'hsl(217.2 32.6% 17.5%)',
-                color: 'hsl(215 20.2% 65.1%)',
-                border: '1px solid hsl(217.2 32.6% 22%)',
-              }}
+              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium bg-slate-800 text-slate-400 border border-slate-700"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Live markets · 400+ pairs
@@ -134,15 +116,14 @@ const page = () => {
           </div>
 
           <h1
-            className="text-4xl md:text-6xl font-bold leading-tight mb-5 text-['hsl(210 20% 98%)']"
+            className="text-4xl md:text-6xl font-bold leading-tight mb-5 text-white"
           >
             The Future of<br />
             <span className="text-gray-400">Crypto Trading</span> is Here
           </h1>
 
           <p
-            className="text-base mb-8 max-w-xl mx-auto leading-relaxed"
-            style={{ color: 'hsl(215 20.2% 65.1%)' }}
+            className="text-base mb-8 max-w-xl mx-auto leading-relaxed text-slate-400"
           >
             Trade 400+ cryptocurrencies with institutional-grade security, sub-millisecond execution,
             and the deepest liquidity on the market.
@@ -151,11 +132,7 @@ const page = () => {
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/in/auth/signup"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md text-sm font-semibold transition-all"
-              style={{
-                background: 'hsl(210 20% 98%)',
-                color: 'hsl(224 71.4% 4.1%)',
-              }}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md text-sm font-semibold transition-all bg-slate-50 text-slate-950"
             >
               Start Trading Free
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -164,20 +141,14 @@ const page = () => {
             </Link>
             <Link
               href="#markets"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
-              style={{
-                background: 'hsl(217.2 32.6% 17.5%)',
-                color: 'hsl(210 20% 98%)',
-                border: '1px solid hsl(217.2 32.6% 22%)',
-              }}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md text-sm font-medium transition-colors bg-slate-800 text-slate-50 border border-slate-700"
             >
               View Markets
             </Link>
           </div>
 
           <div
-            className="flex flex-wrap items-center justify-center gap-6 mt-10 text-xs"
-            style={{ color: 'hsl(215 20.2% 45%)' }}
+            className="flex flex-wrap items-center justify-center gap-6 mt-10 text-xs text-slate-600"
           >
             {['SOC 2 Certified', '256-bit Encryption', '$350M Insurance Fund', 'Regulated Exchange'].map((item) => (
               <span key={item} className="flex items-center gap-1.5">
@@ -191,17 +162,16 @@ const page = () => {
         </div>
       </section>
 
-      <div style={{ borderTop: '1px solid hsl(217.2 32.6% 17.5%)', borderBottom: '1px solid hsl(217.2 32.6% 17.5%)' }}>
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x" style={{ divideColor: 'hsl(217.2 32.6% 17.5%)' }}>
+      <div className="border-t border-b border-slate-800">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-slate-800">
           {stats.map((s, i) => (
             <div
               key={i}
               className="px-8 py-6 text-center"
-              style={{ borderRight: i < 3 ? '1px solid hsl(217.2 32.6% 17.5%)' : 'none' }}
             >
-              <p className="text-2xl font-bold tracking-tight" style={{ color: 'hsl(210 20% 98%)' }}>{s.value}</p>
-              <p className="text-xs font-medium mt-0.5" style={{ color: 'hsl(215 20.2% 65.1%)' }}>{s.label}</p>
-              <p className="text-xs mt-0.5" style={{ color: 'hsl(215 20.2% 45%)' }}>{s.sub}</p>
+              <p className="text-2xl font-bold tracking-tight text-slate-50">{s.value}</p>
+              <p className="text-xs font-medium mt-0.5 text-slate-400">{s.label}</p>
+              <p className="text-xs mt-0.5 text-slate-600">{s.sub}</p>
             </div>
           ))}
         </div>
@@ -210,33 +180,27 @@ const page = () => {
       <section id="markets" className="max-w-5xl mx-auto px-6 py-20">
         <div className="flex items-end justify-between mb-6">
           <div>
-            <p className="text-xs font-medium mb-1" style={{ color: 'hsl(215 20.2% 45%)' }}>LIVE DATA</p>
-            <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'hsl(210 20% 98%)' }}>Market Trends</h2>
+            <p className="text-xs font-medium mb-1 text-slate-600">LIVE DATA</p>
+            <h2 className="text-2xl font-bold tracking-tight text-slate-50">Market Trends</h2>
           </div>
           <Link
             href="#"
-            className="text-xs font-medium transition-colors"
-            style={{ color: 'hsl(215 20.2% 65.1%)' }}
+            className="text-xs font-medium transition-colors text-slate-400"
           >
             View all markets →
           </Link>
         </div>
 
         <div
-          className="rounded-lg overflow-hidden"
-          style={{
-            border: '1px solid hsl(217.2 32.6% 17.5%)',
-            background: 'hsl(222.2 84% 4.9%)',
-          }}
+          className="rounded-lg overflow-hidden border border-slate-800 bg-slate-950"
         >
           <table className="w-full text-sm">
             <thead>
-              <tr style={{ borderBottom: '1px solid hsl(217.2 32.6% 17.5%)' }}>
+              <tr className="border-b border-slate-800">
                 {['#', 'Asset', 'Price', '24h Change', 'Market Cap', 'Volume', '7D Chart', ''].map((h, i) => (
                   <th
                     key={i}
-                    className={`py-3 px-4 text-xs font-medium ${i > 1 ? 'text-right' : 'text-left'} ${i === 7 ? 'text-right' : ''}`}
-                    style={{ color: 'hsl(215 20.2% 45%)' }}
+                    className={`py-3 px-4 text-xs font-medium text-slate-600 ${i > 1 ? 'text-right' : 'text-left'} ${i === 7 ? 'text-right' : ''}`}
                   >
                     {h}
                   </th>
@@ -247,60 +211,49 @@ const page = () => {
               {coins.map((coin, idx) => (
                 <tr
                   key={coin.ticker}
-                  className="group transition-colors"
-                  style={{ borderBottom: idx < coins.length - 1 ? '1px solid hsl(217.2 32.6% 12%)' : 'none' }}
+                  className="group transition-colors border-b border-slate-900 last:border-0"
                 >
                   <td className="py-4 pl-4 pr-2 w-8">
-                    <span className="text-xs" style={{ color: 'hsl(215 20.2% 40%)' }}>{String(idx + 1).padStart(2, '0')}</span>
+                    <span className="text-xs text-slate-600">{String(idx + 1).padStart(2, '0')}</span>
                   </td>
-    
+
                   <td className="py-4 px-4">
                     <div className="flex items-center gap-3">
-                      {/* Placeholder icon */}
                       <div
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                        style={{
-                          background: 'hsl(217.2 32.6% 17.5%)',
-                          color: 'hsl(210 20% 98%)',
-                        }}
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 bg-slate-800 text-slate-50"
                       >
                         {coin.ticker.slice(0, 2)}
                       </div>
                       <div>
-                        <p className="font-semibold text-xs" style={{ color: 'hsl(210 20% 98%)' }}>{coin.name}</p>
-                        <p className="text-xs mt-0.5" style={{ color: 'hsl(215 20.2% 45%)' }}>{coin.ticker}</p>
+                        <p className="font-semibold text-xs text-slate-50">{coin.name}</p>
+                        <p className="text-xs mt-0.5 text-slate-600">{coin.ticker}</p>
                       </div>
                     </div>
                   </td>
                   <td className="py-4 px-4 text-right">
-                    <span className="font-mono font-medium text-xs" style={{ color: 'hsl(210 20% 98%)' }}>{coin.price}</span>
+                    <span className="font-mono font-medium text-xs text-slate-50">{coin.price}</span>
                   </td>
 
                   <td className="py-4 px-4 text-right">
                     <span
-                      className="inline-flex items-center justify-end gap-1 font-mono text-xs font-medium px-2 py-0.5 rounded"
-                      style={{
-                        background: coin.positive ? 'hsl(142.1 76.2% 36.3% / 0.1)' : 'hsl(0 72.2% 50.6% / 0.1)',
-                        color: coin.positive ? 'hsl(142.1 76.2% 46.3%)' : 'hsl(0 72.2% 60.6%)',
-                      }}
+                      className={`inline-flex items-center justify-end gap-1 font-mono text-xs font-medium px-2 py-0.5 rounded ${coin.positive ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}
                     >
                       {coin.positive ? '▲' : '▼'} {coin.change}
                     </span>
                   </td>
 
                   <td className="py-4 px-4 text-right">
-                    <span className="font-mono text-xs" style={{ color: 'hsl(215 20.2% 65.1%)' }}>{coin.marketCap}</span>
+                    <span className="font-mono text-xs text-slate-400">{coin.marketCap}</span>
                   </td>
 
                   <td className="py-4 px-4 text-right">
-                    <span className="font-mono text-xs" style={{ color: 'hsl(215 20.2% 65.1%)' }}>{coin.volume}</span>
+                    <span className="font-mono text-xs text-slate-400">{coin.volume}</span>
                   </td>
 
                   <td className="py-4 px-4 text-right">
-                    <svg width="80" height="28" viewBox="0 0 80 28" className="inline-block">
+                    <svg width="80" height="28" viewBox="0 0 80 28" className={`inline-block ${coin.positive ? 'stroke-green-400' : 'stroke-red-400'}`}>
                       <path
                         d={coin.spark}
-                        stroke={coin.positive ? 'hsl(142.1 76.2% 46.3%)' : 'hsl(0 72.2% 60.6%)'}
                         strokeWidth="1.5"
                         fill="none"
                         strokeLinecap="round"
@@ -312,12 +265,7 @@ const page = () => {
                   <td className="py-4 pl-4 pr-4 text-right">
                     <Link
                       href={`/in/spot/${coin.ticker.toLowerCase()}usdt`}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors"
-                      style={{
-                        background: 'hsl(217.2 32.6% 17.5%)',
-                        color: 'hsl(210 20% 98%)',
-                        border: '1px solid hsl(217.2 32.6% 22%)',
-                      }}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors bg-slate-800 text-slate-50 border border-slate-700"
                     >
                       Trade
                     </Link>
@@ -330,16 +278,15 @@ const page = () => {
       </section>
 
       <section
-        className="py-20 px-6"
-        style={{ borderTop: '1px solid hsl(217.2 32.6% 17.5%)' }}
+        className="py-20 px-6 border-t border-slate-800"
       >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-xs font-medium mb-2" style={{ color: 'hsl(215 20.2% 45%)' }}>HOW IT WORKS</p>
-            <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'hsl(210 20% 98%)' }}>
+            <p className="text-xs font-medium mb-2 text-slate-600">HOW IT WORKS</p>
+            <h2 className="text-2xl font-bold tracking-tight text-slate-50">
               Get started in 3 easy steps
             </h2>
-            <p className="mt-2 text-sm" style={{ color: 'hsl(215 20.2% 65.1%)' }}>
+            <p className="mt-2 text-sm text-slate-400">
               From sign-up to first trade in under 5 minutes.
             </p>
           </div>
@@ -348,48 +295,35 @@ const page = () => {
             {steps.map((step, i) => (
               <div
                 key={i}
-                className="relative rounded-lg p-6 transition-colors"
-                style={{
-                  background: 'hsl(222.2 84% 4.9%)',
-                  border: '1px solid hsl(217.2 32.6% 17.5%)',
-                }}
+                className="relative rounded-lg p-6 transition-colors bg-slate-950 border border-slate-800"
               >
-          
+
                 {i < steps.length - 1 && (
                   <div
-                    className="hidden md:block absolute top-10 -right-2.5 w-5 h-px z-10"
-                    style={{ background: 'hsl(217.2 32.6% 22%)' }}
+                    className="hidden md:block absolute top-10 -right-2.5 w-5 h-px z-10 bg-slate-700"
                   />
                 )}
 
                 <div className="flex items-start gap-4 mb-4">
                   <div
-                    className="w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0"
-                    style={{
-                      background: 'hsl(217.2 32.6% 17.5%)',
-                      color: 'hsl(215 20.2% 65.1%)',
-                      border: '1px solid hsl(217.2 32.6% 22%)',
-                    }}
+                    className="w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0 bg-slate-800 text-slate-400 border border-slate-700"
                   >
                     {step.icon}
                   </div>
                   <span
-                    className="text-xs font-mono font-medium mt-2.5"
-                    style={{ color: 'hsl(215 20.2% 40%)' }}
+                    className="text-xs font-mono font-medium mt-2.5 text-slate-600"
                   >
                     {step.num}
                   </span>
                 </div>
 
                 <h3
-                  className="font-semibold text-sm mb-2"
-                  style={{ color: 'hsl(210 20% 98%)' }}
+                  className="font-semibold text-sm mb-2 text-slate-50"
                 >
                   {step.title}
                 </h3>
                 <p
-                  className="text-xs leading-relaxed"
-                  style={{ color: 'hsl(215 20.2% 55%)' }}
+                  className="text-xs leading-relaxed text-slate-500"
                 >
                   {step.desc}
                 </p>
@@ -400,11 +334,7 @@ const page = () => {
           <div className="text-center mt-8">
             <Link
               href="/in/auth/signup"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md text-sm font-semibold"
-              style={{
-                background: 'hsl(210 20% 98%)',
-                color: 'hsl(224 71.4% 4.1%)',
-              }}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md text-sm font-semibold bg-slate-50 text-slate-950"
             >
               Create Free Account →
             </Link>
@@ -413,23 +343,18 @@ const page = () => {
       </section>
 
       <section
-        className="py-16 px-6"
-        style={{ borderTop: '1px solid hsl(217.2 32.6% 17.5%)' }}
+        className="py-16 px-6 border-t border-slate-800"
       >
         <div
-          className="max-w-5xl mx-auto rounded-lg p-8 md:p-12"
-          style={{
-            background: 'hsl(222.2 84% 4.9%)',
-            border: '1px solid hsl(217.2 32.6% 17.5%)',
-          }}
+          className="max-w-5xl mx-auto rounded-lg p-8 md:p-12 bg-slate-950 border border-slate-800"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
-              <p className="text-xs font-medium mb-3" style={{ color: 'hsl(215 20.2% 45%)' }}>SECURITY FIRST</p>
-              <h2 className="text-2xl font-bold tracking-tight mb-3" style={{ color: 'hsl(210 20% 98%)' }}>
+              <p className="text-xs font-medium mb-3 text-slate-600">SECURITY FIRST</p>
+              <h2 className="text-2xl font-bold tracking-tight mb-3 text-slate-50">
                 Your assets,<br />fully protected.
               </h2>
-              <p className="text-sm leading-relaxed" style={{ color: 'hsl(215 20.2% 65.1%)' }}>
+              <p className="text-sm leading-relaxed text-slate-400">
                 We hold 95% of user funds in offline cold wallets, backed by a
                 $350M insurance fund and audited by top security firms.
               </p>
@@ -443,15 +368,11 @@ const page = () => {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-md p-4"
-                  style={{
-                    background: 'hsl(217.2 32.6% 10%)',
-                    border: '1px solid hsl(217.2 32.6% 17.5%)',
-                  }}
+                  className="rounded-md p-4 bg-slate-900 border border-slate-800"
                 >
-                  <p className="font-bold text-sm" style={{ color: 'hsl(210 20% 98%)' }}>{item.val}</p>
-                  <p className="text-xs font-medium mt-0.5" style={{ color: 'hsl(215 20.2% 65.1%)' }}>{item.label}</p>
-                  <p className="text-xs mt-0.5" style={{ color: 'hsl(215 20.2% 40%)' }}>{item.desc}</p>
+                  <p className="font-bold text-sm text-slate-50">{item.val}</p>
+                  <p className="text-xs font-medium mt-0.5 text-slate-400">{item.label}</p>
+                  <p className="text-xs mt-0.5 text-slate-600">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -460,30 +381,27 @@ const page = () => {
       </section>
 
       <footer
-        className="px-6 py-10 mt-10"
-        style={{ borderTop: '1px solid hsl(217.2 32.6% 17.5%)' }}
+        className="px-6 py-10 mt-10 border-t border-slate-800"
       >
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
 
             <div className="flex items-center gap-2">
               <div
-                className="w-6 h-6 rounded flex items-center justify-center text-xs font-bold"
-                style={{ background: 'hsl(210 20% 98%)', color: 'hsl(224 71.4% 4.1%)' }}
+                className="w-6 h-6 rounded flex items-center justify-center text-xs font-bold bg-slate-50 text-slate-950"
               >
                 CX
               </div>
-              <span className="font-semibold text-sm" style={{ color: 'hsl(210 20% 98%)' }}>CryptoExchange</span>
+              <span className="font-semibold text-sm text-slate-50">CryptoExchange</span>
             </div>
 
-     
+
             <div className="flex flex-wrap items-center justify-center gap-6">
               {['About Us', 'Careers', 'Blog', 'Contact', 'Terms of Service', 'Privacy Policy'].map((item) => (
                 <Link
                   key={item}
                   href="#"
-                  className="text-xs transition-colors"
-                  style={{ color: 'hsl(215 20.2% 50%)' }}
+                  className="text-xs transition-colors text-slate-500"
                 >
                   {item}
                 </Link>
@@ -492,11 +410,7 @@ const page = () => {
           </div>
 
           <div
-            className="flex flex-col md:flex-row items-center justify-between gap-3 pt-6 text-xs"
-            style={{
-              borderTop: '1px solid hsl(217.2 32.6% 17.5%)',
-              color: 'hsl(215 20.2% 40%)',
-            }}
+            className="flex flex-col md:flex-row items-center justify-between gap-3 pt-6 text-xs border-t border-slate-800 text-slate-600"
           >
             <p>© {new Date().getFullYear()} CryptoExchange Inc. All rights reserved.</p>
             <p>Regulated · Insured · SOC 2 Certified</p>
