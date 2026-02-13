@@ -396,16 +396,12 @@ const page = () => {
             </div>
 
 
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              {['About Us', 'Careers', 'Blog', 'Contact', 'Terms of Service', 'Privacy Policy'].map((item) => (
-                <Link
-                  key={item}
-                  href="#"
-                  className="text-xs transition-colors text-slate-500"
-                >
-                  {item}
-                </Link>
-              ))}
+            <div className="flex flex-wrap items-center justify-center gap-6 text-white">
+              <p className="">About Us</p>
+              <p className="">Contact</p>
+              <p className="">Terms of Service</p>
+              <p className="">Privacy Policy</p>
+              <p className=""></p>
             </div>
           </div>
 
