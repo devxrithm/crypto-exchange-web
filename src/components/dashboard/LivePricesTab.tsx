@@ -51,7 +51,7 @@ const LivePrices = () => {
     return () => ws.close();
   }, []);
 
-
+  //for searching
   const filtered = search
     ? sortedPrices.filter((item) =>
       item.s.toLowerCase().includes(search.toLowerCase())
@@ -86,7 +86,7 @@ const LivePrices = () => {
         />
       </div>
 
-      <div className="max-h-[420px] overflow-y-auto">
+      <div className="max-h-90 overflow-y-auto">
         <table className="w-full text-xs">
           <thead className="sticky top-0 z-10 bg-black">
             <tr className="text-slate-500">

@@ -18,7 +18,6 @@ const OpenOrder = () => {
       try {
         const res = await api.get("/api/order/openPositions");
         setData(res.data.data);
-        console.log(res.data)
       } catch (err) {
         if (axios.isAxiosError(err)) {
           setError(err.response?.data?.message || "Failed to load orders");
