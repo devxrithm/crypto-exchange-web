@@ -37,7 +37,9 @@ export default function Home() {
                     <div className="border-r border-r-gray-600 h-202"></div>
                     <div className="mx-2">
                         <div className="flex justify-around gap-3">
-                            <TradingViewWidget symbol={"btcusdt"} />
+                            <div className="min-w-[60%]">
+                                <TradingViewWidget symbol={"btcusdt"} />
+                            </div>
                             <div className="border-r border-r-gray-600 h-106"></div>
                             <OrderBlock />
                         </div>

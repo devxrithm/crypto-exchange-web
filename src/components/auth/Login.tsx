@@ -126,7 +126,7 @@ const Login = () => {
           <button
             onClick={LoginHandler}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 rounded-md py-2.5 text-sm font-semibold transition-opacity mt-1 disabled:opacity-60 disabled:cursor-not-allowed bg-slate-50 text-blue-950"
+            className="cursor-pointer w-full flex items-center justify-center gap-2 rounded-md py-2.5 text-sm font-semibold transition-opacity mt-1 disabled:opacity-60 disabled:cursor-not-allowed bg-slate-50 text-blue-950"
           >
             {loading ? (
               <>
@@ -136,7 +136,7 @@ const Login = () => {
             ) : (
               <>
                 <CiLogin className="text-2xl"/>
-                Sign in
+                Log in
               </>
             )}
           </button>
