@@ -1,19 +1,18 @@
 import { api } from "@/src/lib/axios";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type OrderBookItem = {
   value: string;
   score: number;
 };
 
-
 const Orderbook = () => {
   const [data, setData] = useState<OrderBookItem[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchBalance = async () => {
+    const fetchData = async () => {
       try {
         const res = await api.get("/api/order-book/buy-order-book/btcusdt");
         setData(res.data.book);
@@ -26,7 +25,7 @@ const Orderbook = () => {
         }
       }
     };
-    fetchBalance();
+    fetchData();
   }, []);
 
   return (
@@ -90,9 +89,14 @@ const Orderbook = () => {
                 })
               )}
             </tbody>
+          </table>
 
-            <h1 className=" py-3 font-bold text-center text-white text-2xl">72000</h1>
-            {/* sell order book */}
+          <div className="py-3 px-2 font-bold text-white text-2xl">
+            72,000
+          </div>
+          {/* sell order book */}
+
+          <table className="w-full text-xs">
             <tbody>
               {data.length === 0 ? (
                 <tr>
