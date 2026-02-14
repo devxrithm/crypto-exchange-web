@@ -1,40 +1,118 @@
-import Link from 'next/link'
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
 
 const NavBar = () => {
-    return (
-        <div>
-            <nav className='text-white flex justify-around mt-5 items-center'>
-                <ul className='flex justify-center items-center gap-5'>
-                    <div
-                        className="w-6 h-6 rounded flex items-center justify-center text-xs font-bold"
-                        style={{ background: 'hsl(210 20% 98%)', color: 'hsl(224 71.4% 4.1%)' }}
-                    >
-                        CX
-                    </div>
-                    <li className="text-2xl font-extrabold">CryptoExchange</li>
-                </ul>
-                <ul className='flex justify-center item-center gap-5'>
-                    <Link href={'/in/spot/btcusdt'}>
-                        <li className="bg-[#0b0e11] w-34 text-center p-2 rounded-xl">Dashboard</li>
-                    </Link>
-                    <Link href={'/in/wallet'}>
-                        <li className="bg-[#0b0e11] w-34 text-center p-2 rounded-xl">Wallet</li>
-                    </Link>
-                    <Link href={'/in/market'}>
-                        <li className="bg-[#0b0e11] w-34 text-center p-2 rounded-xl">Market</li>
-                    </Link>
-                </ul>
-                <ul className='flex justify-center item-center gap-3'>
-                    <Link href={'/in/auth/login'}>
-                        <div className="bg-[#0b0e11] w-34 text-center p-2 rounded-xl border ">Login</div>
-                    </Link>
-                    <Link href={'/in/auth/signup'}>
-                        <div className="bg-[#0b0e11] w-34 text-center p-2 rounded-xl bg-white text-black px-4 py-2 rounded-md font-bold">Signup</div>
-                    </Link>
-                </ul>
-            </nav>
-        </div>
-    )
-}
+  const [menuOpen, setMenuOpen] = useState(false);
 
-export default NavBar
+  const navLinks = [
+    { label: "Dashboard", href: "/in/spot/btcusdt" },
+    { label: "Wallet", href: "/in/wallet" },
+    { label: "Market", href: "/in/market" },
+  ];
+
+  return (
+    <header
+      className="sticky top-0 z-50 w-full border-b border-slate-800 backdrop-blur-xl"
+    >
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+          <div
+            className="w-7 h-7 rounded flex items-center justify-center text-xs font-bold bg-slate-50 text-blue-950"
+          >
+            CX
+          </div>
+          <span
+            className="font-semibold text-sm tracking-tight text-slate-50"
+          >
+            CryptoExchange
+          </span>
+        </Link>
+
+        <ul className="hidden md:flex items-center gap-1">
+          {navLinks.map((link) => (
+            <li key={link.href} className="border bg-slate-900 w-26 text-center p-1 rounded-md">
+              <Link
+                href={link.href}
+                className="px-3 py-1.5 rounded-md text-sm font-medium text-white"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="hidden md:flex items-center gap-2">
+          <Link
+            href="/in/auth/login"
+            className="px-8 py-1.5 rounded-md text-sm font-medium border border-slate-800 text-white"
+          >
+            Login
+          </Link>
+          <Link
+            href="/in/auth/signup"
+            className="px-6 py-1.5 rounded-md text-sm font-semibold hover:opacity-90  bg-slate-50 text-black"
+          >
+            Sign Up
+          </Link>
+        </div>
+
+        <button
+          className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 flex-shrink-0"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-label="Toggle menu"
+        >
+          <span
+            className={`block w-5 h-px bg-slate-50 transition-all duration-300 origin-center ${menuOpen ? 'translate-y-1 rotate-45' : ''}`}
+          />
+          <span
+            className={`block w-5 h-px bg-slate-50 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}
+          />
+          <span
+            className={`block w-5 h-px bg-slate-50 transition-all duration-300 origin-center ${menuOpen ? '-translate-y-1 -rotate-45' : ''}`}
+          />
+        </button>
+      </nav>
+
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? "max-h-[400px] border-t border-slate-800" : "max-h-0"}`}>
+        <ul className="flex flex-col px-4 pt-3 pb-2 gap-0.5">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center px-3 py-2.5 rounded-md text-sm font-medium w-full transition-colors text-slate-400"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div
+          className="flex flex-col gap-2 px-4 pt-3 pb-4 border-t border-slate-800"
+        >
+          <Link
+            href="/in/auth/login"
+            onClick={() => setMenuOpen(false)}
+            className="w-full text-center py-2.5 rounded-md text-sm font-medium transition-colors border border-slate-800 text-slate-400"
+          >
+            Login
+          </Link>
+          <Link
+            href="/in/auth/signup"
+            onClick={() => setMenuOpen(false)}
+            className="w-full text-center py-2.5 rounded-md text-sm font-semibold hover:opacity-90 transition-opacity bg-slate-50 text-blue-950"
+          >
+            Sign Up
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default NavBar;

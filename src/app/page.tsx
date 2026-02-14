@@ -98,7 +98,7 @@ const page = () => {
 
   return (
     <div
-      className="min-h-screen font-sans text-sm mt-5 bg-black"
+      className="min-h-screen font-sans text-sm mt-2 bg-black"
     >
       <section className="relative overflow-hidden">
         <div
