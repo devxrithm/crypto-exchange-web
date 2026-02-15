@@ -6,14 +6,10 @@ type TradingViewWidgetProps = {
 };
 
 function TradingViewWidget({ symbol }: TradingViewWidgetProps) {
-  // ✅ Fix 2: Correct ref type for a DOM element
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // ✅ Fix 3: Guard against null ref
     if (!container.current) return;
-
-    // ✅ Fix 4: Prevent duplicate scripts on re-render
     const existingScript = container.current.querySelector("script");
     if (existingScript) return;
 
@@ -22,7 +18,6 @@ function TradingViewWidget({ symbol }: TradingViewWidgetProps) {
     script.type = "text/javascript";
     script.async = true;
 
-    // ✅ Fix 5: symbol was used as a raw word, not interpolated
     script.innerHTML = JSON.stringify({
       allow_symbol_change: true,
       calendar: false,

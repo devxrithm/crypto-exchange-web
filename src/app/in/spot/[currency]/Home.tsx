@@ -12,8 +12,11 @@ import { useState } from "react";
 import OrderHistory from "@/src/components/dashboard/TradeContainer/OrderHistory";
 import OpenOrder from "@/src/components/dashboard/TradeContainer/OpenOrder";
 import TradeHistory from "@/src/components/dashboard/TradeContainer/TradeHistory";
+import { useParams } from "next/navigation";
 
 export default function Home() {
+
+    const params = useParams()
 
     const [activeTab, setActiveTab] = useState<
         "OPEN_ORDER" | "ORDER_HISTORY" | "TRADE_HISTORY" | "HOLDING"
@@ -24,7 +27,7 @@ export default function Home() {
         <>
             <Provider store={store}>
                 <div className="flex justify-between items-center mt-5 px-3">
-                    <Ticker />
+                    <Ticker token={String(params.currency)} />
                     <WalletContainer />
                 </div>
                 <hr className="text-gray-700 mt-2" />
