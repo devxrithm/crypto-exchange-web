@@ -9,7 +9,7 @@ interface TickerData {
   l: string;   // Low price
   v: string;  // Volume
   q: string   // Total traded base asset volume
-  o:string
+  o: string
 }
 
 interface TickerProps {
@@ -18,15 +18,11 @@ interface TickerProps {
 
 const Ticker = ({ token }: TickerProps) => {
   const [ticker, setTicker] = useState<TickerData | null>(null);
-  const [connected, setConnected] = useState(false);
 
   useEffect(() => {
     const ws = new window.WebSocket(
       `wss://fstream.binance.com/stream?streams=${token}@ticker`
     );
-
-    ws.onopen = () => setConnected(true);
-
     ws.onmessage = (event: MessageEvent) => {
       try {
         const data = JSON.parse(event.data);
@@ -42,13 +38,12 @@ const Ticker = ({ token }: TickerProps) => {
 
     ws.onerror = (err) => console.error("WebSocket error:", err);
     ws.onclose = () => {
-      setConnected(false);
       console.warn("Binance WebSocket closed");
     };
 
     return () => ws.close();
-  }, [token]); 
-  
+  }, [token]);
+
   return (
     <div className="w-[73%] text-xl flex justify-around items-center">
       <div className="font-semibold text-gray-100 text-2xl">
@@ -57,7 +52,7 @@ const Ticker = ({ token }: TickerProps) => {
       <div className="text-white text-bold">
         $ {ticker?.c}
       </div>
-      <div className={Number(ticker?.P )>= 0 ? "text-green-400 flex flex-col" : "text-red-400 flex flex-col"}>
+      <div className={Number(ticker?.P) >= 0 ? "text-green-400 flex flex-col" : "text-red-400 flex flex-col"}>
         <span className="text-gray-600 text-xs">24h Chg</span>
         <span className="text-sm">{ticker?.p}{"   "}{ticker?.P}</span>
       </div>
