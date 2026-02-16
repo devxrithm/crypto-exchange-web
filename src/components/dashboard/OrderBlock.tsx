@@ -10,6 +10,7 @@ let success: string = "false";
 const OrderBlock = () => {
   const [state, setState] = useState("BUY")
   const [amount, setAmount] = useState<number>(0)
+  const [qty, setQty] = useState<number>(0)
   const [error, setError] = useState("")
 
   const dispatch = useDispatch()
@@ -34,8 +35,24 @@ const OrderBlock = () => {
       }
     }
   }
-  const sellHandler = () => {
-    setState("SELL")
+  const sellHandler = async () => {
+    try {
+      await api.post("/api/order/sellorder", {
+        currencyPair: params.currency,
+        orderSide: 'SELL',
+        orderType: 'Market',
+        entryPrice: 3000,
+        positionStatus: 'Open',
+        orderQuantity: qty
+      })
+      dispatch(changeOrder())
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.message || "Login failed");
+      } else {
+        setError("Something went wrong");
+      }
+    }
   }
 
   return (
@@ -112,6 +129,8 @@ const OrderBlock = () => {
                   type="number"
                   placeholder="Total"
                   className="p-3 text-gray-300 outline-none w-64"
+                  value={qty}
+                  onChange={(e) => setQty(Number(e.target.value))}
                 />
                 <p className="text-white font-semibold p-3">USDT</p>
               </div>
