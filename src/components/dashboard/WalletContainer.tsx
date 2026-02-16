@@ -16,11 +16,9 @@ const WalletContainer = () => {
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        const res = await api.get("/api/wallet/getuserbalance/USDT");
-        const res2 = await api.get("/api/wallet/getuserbalance/ETHUSDT");
-        setBalance(Number(res.data.data));
-        setTokenBalance(Number(res2.data.data));
-        console.log(res.data.data)
+        const res = await api.get("/api/wallet/getuserbalance?asset1=USDT&asset2=ETHUSDT");
+        setBalance(Number(res.data.data.asset1));
+        setTokenBalance(Number(res.data.data.asset2));
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.response?.data?.message || "Login failed");
