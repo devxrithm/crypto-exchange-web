@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const orderSlice = createSlice({
     name: "order",
     initialState: {
-        isChanging: false,
+        orderCount: 0,
     },
     reducers: {
         changeOrder: (state) => {
-            state.isChanging = true
+            state.orderCount += 1;
         },
         resetOrderChange: (state) => {
-            state.isChanging = false;
+            state.orderCount = 0;
         }
     }
 }

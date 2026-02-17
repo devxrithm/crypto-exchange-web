@@ -1,26 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface WalletState {
+export interface WalletData {
+  asset1: number;
+  asset2: number;
+}
+
+export interface WalletState {
   isWalletChanging: boolean;
-  data: any[];
+  data: WalletData | null;
 }
 
 const initialState: WalletState = {
   isWalletChanging: false,
-  data: [],
+  data: null,
 };
 
 const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    changeWalletState: (state, action: PayloadAction<any[]>) => {
+    changeWalletState: (state, action: PayloadAction<WalletData>) => {
       state.isWalletChanging = true;
       state.data = action.payload;
     },
     resetWalletChange: (state) => {
       state.isWalletChanging = false;
-      state.data = [];
+      state.data = null;
     },
   },
 });

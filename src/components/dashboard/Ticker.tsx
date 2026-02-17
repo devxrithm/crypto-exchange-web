@@ -30,7 +30,6 @@ const Ticker = ({ token }: TickerProps) => {
 
         if (!prices) return;
         setTicker(prices)
-        console.log(prices)
       } catch (err) {
         console.error("Parse error:", err);
       }

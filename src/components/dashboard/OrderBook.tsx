@@ -16,7 +16,7 @@ const Orderbook = () => {
       try {
         const res = await api.get("/api/order-book/buy-order-book/btcusdt");
         setData(res.data.book);
-        console.log(res.data);
+        
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.response?.data?.message || "Failed to fetch orderbook");

@@ -5,11 +5,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { OpenPosition } from "@/src/lib/types";
+import { RootState } from "@/src/context/store";
 
 const OpenOrder = () => {
   const [data, setData] = useState<OpenPosition[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const isChanging = useSelector((state: any) => state.order.isChanging)
+  const isChanging = useSelector((state: RootState) => state.order.orderCount)
 
   const dispatch = useDispatch()
 
@@ -24,9 +25,6 @@ const OpenOrder = () => {
         } else {
           setError("Something went wrong");
         }
-      }
-      finally {
-        dispatch(resetOrderChange());
       }
     };
 

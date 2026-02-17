@@ -1,5 +1,6 @@
 "use client";
 
+import { resetOrderChange } from "@/src/context/features/orderSlice";
 import { changeWalletState } from "@/src/context/features/walletSlice";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
@@ -10,13 +11,14 @@ import { useDispatch, useSelector } from "react-redux";
 const WalletContainer = () => {
 
   const param = useParams()
-  const asset = String(param.currency).toUpperCase().replace("USDT","")
+  const asset = String(param.currency).toUpperCase().replace("USDT", "")
 
   const [balance, setBalance] = useState(0);
   const [tokenBalance, setTokenBalance] = useState(0);
   const [error, setError] = useState("");
 
-  // const isChanging = useSelector((state: any) => state.wallet.isWalletChanging)
+  const isChanging = useSelector((state: any) => state.order.orderCount)
+  console.log(isChanging)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -27,6 +29,7 @@ const WalletContainer = () => {
         setTokenBalance(Number(res.data.data.asset2));
 
         dispatch(changeWalletState(res.data.data))
+        dispatch(resetOrderChange());
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.response?.data?.message || "Login failed");
@@ -36,7 +39,7 @@ const WalletContainer = () => {
       }
     };
     fetchBalance();
-  }, [dispatch]);
+  }, [isChanging]);
 
   return (
     <>

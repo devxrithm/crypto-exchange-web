@@ -1,10 +1,11 @@
 "use client"
 import { changeOrder } from "@/src/context/features/orderSlice";
+import { RootState } from "@/src/context/store";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 let success: string = "false";
 const OrderBlock = () => {
@@ -15,6 +16,12 @@ const OrderBlock = () => {
 
   const dispatch = useDispatch()
   const params = useParams();
+  const asset = String(params.currency).toUpperCase().replace("USDT", "")
+
+  const walletData = useSelector((state: RootState) => state.wallet.data);
+
+  const usdtBalance = Number(walletData?.asset1).toFixed(3) ?? 0;
+  const tokenBalance = Number(walletData?.asset2).toFixed(3) ?? 0;
 
   const buyHandler = async () => {
     try {
@@ -93,7 +100,7 @@ const OrderBlock = () => {
 
             <div className="flex justify-between text-xs text-gray-500 mt-5">
               <p className="">Available Margin</p>
-              <p className="">32500 USDT</p>
+              <p className="">{usdtBalance} USDT</p>
             </div>
             <div className="flex justify-between text-xs text-gray-500 mt-2">
               <p className="">Max Qty.</p>
@@ -138,7 +145,7 @@ const OrderBlock = () => {
 
             <div className="flex justify-between text-xs text-gray-500 mt-5">
               <p className="">Available Margin</p>
-              <p className="">32500 USDT</p>
+              <p className="">{tokenBalance} {asset}</p>
             </div>
             <div className="flex justify-between text-xs text-gray-500 mt-2">
               <p className="">Max Qty.</p>
