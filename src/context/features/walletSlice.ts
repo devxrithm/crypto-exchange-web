@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface WalletState {
-  isChanging: boolean;
+  isWalletChanging: boolean;
   data: any[];
 }
 
 const initialState: WalletState = {
-  isChanging: false,
+  isWalletChanging: false,
   data: [],
 };
 
@@ -15,11 +15,11 @@ const walletSlice = createSlice({
   initialState,
   reducers: {
     changeWalletState: (state, action: PayloadAction<any[]>) => {
-      state.isChanging = true;
+      state.isWalletChanging = true;
       state.data = action.payload;
     },
     resetWalletChange: (state) => {
-      state.isChanging = false;
+      state.isWalletChanging = false;
       state.data = [];
     },
   },

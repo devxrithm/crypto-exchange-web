@@ -1,24 +1,32 @@
 "use client";
 
+import { changeWalletState } from "@/src/context/features/walletSlice";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const WalletContainer = () => {
+
+  const param = useParams()
+  const asset = String(param.currency).toUpperCase().replace("USDT","")
+
   const [balance, setBalance] = useState(0);
   const [tokenBalance, setTokenBalance] = useState(0);
   const [error, setError] = useState("");
 
-  const isChanging = useSelector((state: any) => state.order.isChanging)
+  // const isChanging = useSelector((state: any) => state.wallet.isWalletChanging)
   const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        const res = await api.get("/api/wallet/getuserbalance?asset1=USDT&asset2=ETHUSDT");
+        const res = await api.get(`/api/wallet/getuserbalance?asset1=USDT&asset2=${asset}`);
         setBalance(Number(res.data.data.asset1));
         setTokenBalance(Number(res.data.data.asset2));
+
+        dispatch(changeWalletState(res.data.data))
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.response?.data?.message || "Login failed");
@@ -28,7 +36,7 @@ const WalletContainer = () => {
       }
     };
     fetchBalance();
-  }, [isChanging, dispatch]);
+  }, [dispatch]);
 
   return (
     <>
@@ -42,7 +50,7 @@ const WalletContainer = () => {
           <p className="font-bold text-gray-200">$ {balance.toFixed(2) || 0}</p>
         </div>
         <div className="py-3 px-4  rounded-sm bg-[#0b0e11] flex flex-col justify-center items-right ">
-          <p className="text-sm text-gray-300">ETH Wallet</p>
+          <p className="text-sm text-gray-300">{asset} Wallet</p>
           <p className="font-bold text-gray-200">{tokenBalance || 0} </p>
         </div>
       </div>

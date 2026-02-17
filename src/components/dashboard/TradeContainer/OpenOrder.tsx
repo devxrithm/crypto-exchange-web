@@ -34,8 +34,6 @@ const OpenOrder = () => {
   }, [isChanging, dispatch]);
 
   return (
-
-
     <table className="w-full px-5 text-sm mt-5">
       <thead>
         <tr className="text-gray-500 text-center">
