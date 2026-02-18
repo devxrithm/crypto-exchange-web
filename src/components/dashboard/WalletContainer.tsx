@@ -54,7 +54,7 @@ const WalletContainer = () => {
         </div>
         <div className="py-3 px-4  rounded-sm bg-[#0b0e11] flex flex-col justify-center items-right ">
           <p className="text-sm text-gray-300">{asset} Wallet</p>
-          <p className="font-bold text-gray-200">{tokenBalance || 0} </p>
+          <p className="font-bold text-gray-200">{tokenBalance.toFixed(3) || 0} </p>
         </div>
       </div>
     </>

@@ -33,7 +33,7 @@ const OrderHistory = () => {
 
     fetchClosePositions();
   }, [isChanging, dispatch]);
-console.log(data)
+  console.log(data)
   return (
     <table className="w-full px-5 text-sm mt-5">
       <thead>
@@ -57,7 +57,7 @@ console.log(data)
           </tr>
         )}
         <tr
-
+          key="spacer"
           className="text-gray-300 text-center  text-sm "
         >
           <td className="py-1"></td>

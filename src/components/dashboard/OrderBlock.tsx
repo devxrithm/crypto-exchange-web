@@ -6,12 +6,14 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RiLoader2Fill } from "react-icons/ri";
 
 let success: string = "false";
 const OrderBlock = () => {
   const [state, setState] = useState("BUY")
   const [amount, setAmount] = useState<number>(0)
   const [qty, setQty] = useState<number>(0)
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("")
 
   const dispatch = useDispatch()
@@ -25,6 +27,7 @@ const OrderBlock = () => {
 
   const buyHandler = async () => {
     try {
+      setLoading(true)
       await api.post("/api/order/buyorder", {
         currencyPair: params.currency,
         orderSide: 'BUY',
@@ -40,10 +43,14 @@ const OrderBlock = () => {
       } else {
         setError("Something went wrong");
       }
+    } finally {
+      setLoading(false);
     }
   }
+
   const sellHandler = async () => {
     try {
+      setLoading(true)
       await api.post("/api/order/sellorder", {
         currencyPair: params.currency,
         orderSide: 'SELL',
@@ -59,6 +66,8 @@ const OrderBlock = () => {
       } else {
         setError("Something went wrong");
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -108,10 +117,19 @@ const OrderBlock = () => {
             </div>
             <div className="flex justify-evenly items-center gap-1 mt-5">
               <button onClick={buyHandler} className="bg-emerald-500 py-3 w-full rounded-sm text-white font-semibold hover:scale-105 cursor-pointer text-sm">
-                BUY
+                {loading ? (
+                  <div className="flex justify-center items-center gap-3">
+                    <RiLoader2Fill className="text-xl" />
+                    Order Placing...
+                  </div>
+                ) : (
+                  <>
+                    BUY
+                  </>
+                )}
               </button>
             </div>
-          </div> : <div className="w-[32%] py-5 px-3 text-white bg-[#0b0e11] mt-2">
+          </div > : <div className="w-[32%] py-5 px-3 text-white bg-[#0b0e11] mt-2">
             <h1 className="">Exchange / Spot</h1>
             <hr className="text-gray-700 mt-1" />
             <div className="text-white text-xs flex justify-around items-center border border-gray-700 mt-5 rounded-sm">
@@ -153,7 +171,16 @@ const OrderBlock = () => {
             </div>
             <div className="flex justify-evenly items-center gap-1 mt-5">
               <button onClick={sellHandler} className="bg-red-500 py-3 w-full rounded-sm text-white font-semibold hover:scale-105 cursor-pointer text-sm">
-                SELL
+                {loading ? (
+                  <div className="flex justify-center items-center gap-3">
+                    <RiLoader2Fill className="text-xl" />
+                    Order Placing...
+                  </div>
+                ) : (
+                  <>
+                    SELL
+                  </>
+                )}
               </button>
             </div>
           </div>
