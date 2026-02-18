@@ -1,5 +1,6 @@
 import { api } from "@/src/lib/axios";
 import axios from "axios";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type OrderBookItem = {
@@ -8,15 +9,19 @@ type OrderBookItem = {
 };
 
 const Orderbook = () => {
-  const [data, setData] = useState<OrderBookItem[]>([]);
+  const [buyData, setBuyData] = useState<OrderBookItem[]>([]);
+  const [sellData, setSellata] = useState<OrderBookItem[]>([]);
   const [error, setError] = useState("");
+  const param = useParams()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await api.get("/api/order-book/buy-order-book/btcusdt");
-        setData(res.data.book);
-        
+        const buyRes = await api.get(`/api/order-book/buy-order-book/${param.currency}`);
+        const sellRes = await api.get(`/api/order-book/sell-order-book/${param.currency}`);
+        setBuyData(buyRes.data.book);
+        setSellata(sellRes.data.book);
+
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.response?.data?.message || "Failed to fetch orderbook");
@@ -55,7 +60,7 @@ const Orderbook = () => {
             </thead>
 
             <tbody>
-              {data.length === 0 ? (
+              {buyData.length === 0 ? (
                 <tr>
                   <td
                     colSpan={3}
@@ -65,7 +70,7 @@ const Orderbook = () => {
                   </td>
                 </tr>
               ) : (
-                data.map((item) => {
+                buyData.map((item) => {
                   const qty = item.value.split('|')
                   const quantity = Number(qty[2])
                   const amount = (quantity * Number(item.score)).toFixed(2)
@@ -98,7 +103,7 @@ const Orderbook = () => {
 
           <table className="w-full text-xs">
             <tbody>
-              {data.length === 0 ? (
+              {sellData.length === 0 ? (
                 <tr>
                   <td
                     colSpan={3}
@@ -108,7 +113,7 @@ const Orderbook = () => {
                   </td>
                 </tr>
               ) : (
-                data.map((item) => {
+                sellData.map((item) => {
                   const qty = item.value.split('|')
                   const quantity = Number(qty[2])
                   const amount = (quantity * Number(item.score)).toFixed(2)
