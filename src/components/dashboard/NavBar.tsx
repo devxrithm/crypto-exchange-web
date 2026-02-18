@@ -9,7 +9,7 @@ const NavBar = () => {
   const navLinks = [
     { label: "Dashboard", href: "/in/spot/btcusdt" },
     { label: "Wallet", href: "/in/wallet" },
-    { label: "Market", href: "/in/market" },
+    { label: "Market", href: "/in/market/btcusdt" },
   ];
 
   return (
