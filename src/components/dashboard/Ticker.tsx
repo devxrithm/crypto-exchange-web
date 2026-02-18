@@ -21,7 +21,7 @@ const Ticker = ({ token }: TickerProps) => {
 
   useEffect(() => {
     const ws = new window.WebSocket(
-      `wss://fstream.binance.com/stream?streams=${token}@ticker`
+      `wss://fstream.binance.com/stream?streams=${token.toLowerCase()}@ticker`
     );
     ws.onmessage = (event: MessageEvent) => {
       try {

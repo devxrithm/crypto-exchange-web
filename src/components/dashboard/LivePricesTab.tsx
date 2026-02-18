@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 interface MarkPrice {
@@ -22,7 +23,7 @@ const LivePrices = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    const ws = new window.WebSocket(`${process.env.NEXT_PUBLIC_SOCKET_URL}`);
+    const ws = new window.WebSocket("wss://fstream.binance.com/stream?streams=!markPrice@arr");
 
     ws.onopen = () => setConnected(true);
 
@@ -117,7 +118,12 @@ const LivePrices = () => {
                     className="border-b border-slate-900 hover:bg-slate-900/50 transition-colors"
                   >
                     <td className="px-3 py-2 text-slate-50 font-medium">
-                      {item.s}
+                      <Link
+                        href={`/in/spot/${item.s.toLowerCase()}`}
+                        className="text-slate-200 hover:text-emerald-400 transition-colors font-medium"
+                      >
+                        {item.s}
+                      </Link>
                     </td>
                     <td className={`px-3 py-2 text-right font-mono text-slate-300`}>
                       {formatPrice(Number(item.p))}
