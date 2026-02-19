@@ -1,415 +1,247 @@
-"use client"
+"use client";
+
 import { api } from "@/src/lib/axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const WalletDashboard = () => {
-  const [balance, setBalance] = useState(0);
+interface WalletAsset {
+  symbol: string;
+  name: string;
+  balance: number;
+  usdValue: number;
+  change24h: number;
+}
+
+const ASSETS: WalletAsset[] = [
+  { symbol: "BTC",  name: "Bitcoin",   balance: 0.255554,  usdValue: 16722.41, change24h:  1.25 },
+  { symbol: "ETH",  name: "Ethereum",  balance: 4.820000,  usdValue: 16939.96, change24h: -0.50 },
+  { symbol: "SOL",  name: "Solana",    balance: 38.75000,  usdValue:  5254.63, change24h:  3.80 },
+  { symbol: "BNB",  name: "BNB",       balance: 6.120000,  usdValue:  3607.44, change24h: -1.10 },
+  { symbol: "USDT", name: "Tether",    balance: 2840.000,  usdValue:  2840.00, change24h:  0.01 },
+  { symbol: "XRP",  name: "XRP",       balance: 2120.000,  usdValue:  1573.00, change24h:  2.40 },
+  { symbol: "ADA",  name: "Cardano",   balance: 3200.000,  usdValue:  1184.00, change24h:  0.88 },
+  { symbol: "AVAX", name: "Avalanche", balance: 28.50000,  usdValue:  1094.40, change24h:  4.12 },
+];
+
+const usd = (n: number) =>
+  n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+const COLORS: Record<string, string> = {
+  BTC: "#F7931A", ETH: "#627EEA", SOL: "#9945FF",
+  BNB: "#F3BA2F", USDT: "#26A17B", XRP: "#00AAE4",
+  ADA: "#0033AD", AVAX: "#E84142",
+};
+
+export default function WalletDashboard() {
+  const [hide, setHide] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const total = ASSETS.reduce((s, a) => s + a.usdValue, 0);
 
   useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        const res = await api.get("/wallet/balance");
-        setBalance(res.data);
-      } catch (error) {
-        console.error("Failed to fetch balance:", error);
-      }
-    };
-
-    fetchBalance();
+    // fetch real balance here
+    setMounted(true);
   }, []);
 
   return (
-    <div className="text-white m-16">
-      <div className=" text-2xl font-semibold ">
-        <h1 className="text-2xl">Total Balance</h1>
-        <h1 className="text-9xl font-mono">$ 320000.25 <span className="text-6xl text-gray-300">USDT</span></h1>
-      </div>
-      <hr className="text-gray-700 mt-3" />
-      <div className="mt-10">
-        <h1 className="text-3xl font-semibold">Wallet</h1>
-        <div className="flex gap-5 items-center flex-wrap mt-5">
-          <div className="bg-[#0b0e11] min-w-64 p-5 rounded-xl">
-            <p className="font-semibold text-2xl">BTCUSDT</p>
-            <p className="font-semibold text-5xl font-mono">0.255554</p>
+    <div className="min-h-screen bg-[#080810] text-white" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Playfair+Display:wght@700;900&display=swap');
+        @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+        .fade-up { animation: fadeUp 0.5s ease forwards; opacity: 0; }
+        .asset-row:hover .trade-link { opacity: 1; }
+        .bar-fill { transition: width 1s cubic-bezier(0.16,1,0.3,1); }
+      `}</style>
+
+      <div className="max-w-5xl mx-auto px-6 py-12">
+
+        {/* Header */}
+        <div className="fade-up flex items-end justify-between mb-12" style={{ animationDelay: "0ms" }}>
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/25 mb-1">Portfolio</p>
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", fontWeight: 900, lineHeight: 1 }}>
+              My Wallet
+            </h1>
           </div>
-          <div className="bg-[#0b0e11] min-w-64 p-5 rounded-xl">
-            <p className="font-semibold text-2xl">BTCUSDT</p>
-            <p className="font-semibold text-5xl font-mono">0.255554</p>
+          <div className="flex gap-2">
+            {["Deposit", "Withdraw"].map((label, i) => (
+              <button
+                key={label}
+                className="px-4 py-2 text-[11px] rounded-lg border transition-all hover:bg-white/5"
+                style={{ borderColor: "rgba(255,255,255,0.08)", color: i === 0 ? "#fff" : "rgba(255,255,255,0.4)" }}
+              >
+                {label}
+              </button>
+            ))}
           </div>
-          <div className="bg-[#0b0e11] min-w-64 p-5 rounded-xl">
-            <p className="font-semibold text-2xl">BTCUSDT</p>
-            <p className="font-semibold text-5xl font-mono">0.255554</p>
-          </div>
-          <div className="bg-[#0b0e11] min-w-64 p-5 rounded-xl">
-            <p className="font-semibold text-2xl">BTCUSDT</p>
-            <p className="font-semibold text-5xl font-mono">0.255554</p>
-          </div>
-          <div className="bg-[#0b0e11] min-w-64 p-5 rounded-xl">
-            <p className="font-semibold text-2xl">BTCUSDT</p>
-            <p className="font-semibold text-5xl font-mono">0.255554</p>
-          </div>
-          <div className="bg-[#0b0e11] min-w-64 p-5 rounded-xl">
-            <p className="font-semibold text-2xl">BTCUSDT</p>
-            <p className="font-semibold text-5xl font-mono">0.255554</p>
-          </div>
-          <div className="bg-[#0b0e11] min-w-64 p-5 rounded-xl">
-            <p className="font-semibold text-2xl">BTCUSDT</p>
-            <p className="font-semibold text-5xl font-mono">0.255554</p>
-          </div>
-          <div className="bg-[#0b0e11] min-w-64 p-5 rounded-xl">
-            <p className="font-semibold text-2xl">BTCUSDT</p>
-            <p className="font-semibold text-5xl font-mono">0.255554</p>
-          </div>
-          
         </div>
+
+        {/* Balance hero */}
+        <div
+          className="fade-up rounded-2xl p-8 mb-8 relative overflow-hidden"
+          style={{ animationDelay: "60ms", background: "linear-gradient(135deg, #0f0f1a 0%, #0a0a14 100%)", border: "1px solid rgba(255,255,255,0.06)" }}
+        >
+          {/* subtle grid bg */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{
+            backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+            backgroundSize: "40px 40px"
+          }} />
+
+          <div className="relative flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-[9px] uppercase tracking-[0.25em] text-white/25">Total Balance</span>
+                <button
+                  onClick={() => setHide(v => !v)}
+                  className="text-white/25 hover:text-white/50 transition-colors"
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    {hide
+                      ? <><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22" /></>
+                      : <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></>
+                    }
+                  </svg>
+                </button>
+              </div>
+
+              <div className="flex items-baseline gap-3">
+                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.4rem, 7vw, 4rem)", fontWeight: 900, lineHeight: 1 }}>
+                  {hide ? "$ ·····" : `$${usd(total)}`}
+                </span>
+                <span className="text-sm text-white/25">USDT</span>
+              </div>
+
+              <div className="flex items-center gap-3 mt-3">
+                <span className="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400">▲ +1.18%</span>
+                <span className="text-xs text-white/25">24h</span>
+                <span className="text-xs text-white/25">·</span>
+                <span className="text-xs text-emerald-400/70">+$824.30 today</span>
+              </div>
+            </div>
+
+            {/* Mini stats */}
+            <div className="flex gap-8">
+              {[
+                { label: "Assets", value: ASSETS.length },
+                { label: "Open Orders", value: 3 },
+              ].map(({ label, value }) => (
+                <div key={label} className="text-right">
+                  <p className="text-[9px] uppercase tracking-[0.2em] text-white/20 mb-1">{label}</p>
+                  <p className="text-xl font-medium">{value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Sparkline */}
+          <svg viewBox="0 0 600 48" className="w-full mt-8" style={{ height: 40 }} preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#10b981" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path d="M0,44 C40,40 80,36 120,28 C160,20 200,22 240,15 C280,8 320,10 360,6 C400,2 450,4 500,3 L600,1" stroke="#10b981" strokeWidth="1.5" fill="none" opacity="0.6" />
+            <path d="M0,44 C40,40 80,36 120,28 C160,20 200,22 240,15 C280,8 320,10 360,6 C400,2 450,4 500,3 L600,1 L600,48 L0,48Z" fill="url(#sg)" />
+          </svg>
+        </div>
+
+        {/* Asset table */}
+        <div className="fade-up" style={{ animationDelay: "120ms" }}>
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-[10px] uppercase tracking-[0.25em] text-white/30">Assets</h2>
+            <span className="text-[10px] text-white/20">{ASSETS.length} tokens</span>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.06)" }}>
+            {/* Table header */}
+            <div
+              className="grid px-5 py-3 text-[9px] uppercase tracking-[0.2em] text-white/20"
+              style={{ gridTemplateColumns: "2fr 1.2fr 1.2fr 1fr 1.5fr 60px", borderBottom: "1px solid rgba(255,255,255,0.04)", background: "#0a0a14" }}
+            >
+              <span>Asset</span>
+              <span className="text-right">Balance</span>
+              <span className="text-right">Value</span>
+              <span className="text-right">24h</span>
+              <span>Allocation</span>
+              <span />
+            </div>
+
+            {ASSETS.map((asset, i) => {
+              const isUp = asset.change24h >= 0;
+              const pct = (asset.usdValue / total) * 100;
+              const color = COLORS[asset.symbol] ?? "#666";
+
+              return (
+                <div
+                  key={asset.symbol}
+                  className="asset-row fade-up grid px-5 py-4 items-center transition-colors hover:bg-white/[0.02]"
+                  style={{
+                    gridTemplateColumns: "2fr 1.2fr 1.2fr 1fr 1.5fr 60px",
+                    borderBottom: i < ASSETS.length - 1 ? "1px solid rgba(255,255,255,0.03)" : "none",
+                    animationDelay: `${140 + i * 40}ms`,
+                    background: i % 2 === 0 ? "transparent" : "rgba(255,255,255,0.005)"
+                  }}
+                >
+                  {/* Name */}
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-semibold flex-shrink-0"
+                      style={{ background: `${color}18`, color, border: `1px solid ${color}30` }}
+                    >
+                      {asset.symbol.slice(0, 2)}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-white/90">{asset.symbol}</p>
+                      <p className="text-[10px] text-white/25">{asset.name}</p>
+                    </div>
+                  </div>
+
+                  {/* Balance */}
+                  <p className="text-sm text-right text-white/60 font-light">
+                    {hide ? "·····" : asset.balance.toLocaleString("en-US", { maximumFractionDigits: 6 })}
+                  </p>
+
+                  {/* Value */}
+                  <p className="text-sm text-right text-white/90">
+                    {hide ? "$·····" : `$${usd(asset.usdValue)}`}
+                  </p>
+
+                  {/* Change */}
+                  <p className={`text-sm text-right font-medium ${isUp ? "text-emerald-400" : "text-red-400"}`}>
+                    {isUp ? "+" : ""}{asset.change24h}%
+                  </p>
+
+                  {/* Allocation bar */}
+                  <div className="pr-4">
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 h-1 rounded-full bg-white/5 overflow-hidden">
+                        {mounted && (
+                          <div
+                            className="bar-fill h-full rounded-full"
+                            style={{ width: `${pct}%`, background: color, opacity: 0.7 }}
+                          />
+                        )}
+                      </div>
+                      <span className="text-[9px] text-white/20 w-8 text-right">{pct.toFixed(0)}%</span>
+                    </div>
+                  </div>
+
+                  {/* Trade link */}
+                  <div className="text-right">
+                    <Link
+                      href={`/in/spot/${asset.symbol.toLowerCase()}usdt`}
+                      className="trade-link text-[10px] text-white/20 hover:text-white/60 transition-all opacity-0 tracking-wide"
+                    >
+                      Trade →
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
       </div>
     </div>
   );
-};
-
-export default WalletDashboard;
-
-
-// "use client";
-
-// import { api } from "@/src/lib/axios";
-// import { useEffect, useState } from "react";
-// import Link from "next/link";
-
-// interface WalletAsset {
-//   symbol: string;
-//   name: string;
-//   balance: number;
-//   usdValue: number;
-//   change24h: number;
-// }
-
-// const C = {
-//   bg:        "#000000",
-//   surface:   "hsl(222.2 84% 4.9%)",
-//   surfaceHi: "hsl(217.2 32.6% 10%)",
-//   border:    "hsl(217.2 32.6% 17.5%)",
-//   text:      "hsl(210 20% 98%)",
-//   muted:     "hsl(215 20.2% 65.1%)",
-//   faint:     "hsl(215 20.2% 40%)",
-//   green:     "hsl(142.1 76.2% 46.3%)",
-//   greenBg:   "hsl(142.1 76.2% 36.3% / 0.12)",
-//   red:       "hsl(0 72.2% 60.6%)",
-//   redBg:     "hsl(0 72.2% 50.6% / 0.12)",
-// };
-
-// // Dummy wallet data — replace with real API response shape
-// const DUMMY_ASSETS: WalletAsset[] = [
-//   { symbol: "BTC",  name: "Bitcoin",  balance: 0.255554,   usdValue: 16_722.41, change24h:  1.25 },
-//   { symbol: "ETH",  name: "Ethereum", balance: 4.820000,   usdValue: 16_939.96, change24h: -0.50 },
-//   { symbol: "SOL",  name: "Solana",   balance: 38.75000,   usdValue:  5_254.63, change24h:  3.80 },
-//   { symbol: "BNB",  name: "BNB",      balance: 6.120000,   usdValue:  3_607.44, change24h: -1.10 },
-//   { symbol: "USDT", name: "Tether",   balance: 2_840.000,  usdValue:  2_840.00, change24h:  0.01 },
-//   { symbol: "XRP",  name: "XRP",      balance: 2_120.000,  usdValue:  1_573.00, change24h:  2.40 },
-//   { symbol: "ADA",  name: "Cardano",  balance: 3_200.000,  usdValue:  1_184.00, change24h:  0.88 },
-//   { symbol: "AVAX", name: "Avalanche",balance: 28.50000,   usdValue:  1_094.40, change24h:  4.12 },
-// ];
-
-// // ── Helper components ──────────────────────────────────────────────────────────
-
-// const Card = ({
-//   children,
-//   className = "",
-//   style = {},
-// }: {
-//   children: React.ReactNode;
-//   className?: string;
-//   style?: React.CSSProperties;
-// }) => (
-//   <div
-//     className={`rounded-xl ${className}`}
-//     style={{ background: C.surface, border: `1px solid ${C.border}`, ...style }}
-//   >
-//     {children}
-//   </div>
-// );
-
-// const TokenAvatar = ({ symbol }: { symbol: string }) => (
-//   <div
-//     className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-//     style={{ background: C.surfaceHi, color: C.muted, border: `1px solid ${C.border}` }}
-//   >
-//     {symbol.slice(0, 2)}
-//   </div>
-// );
-
-// // ── Main Component ─────────────────────────────────────────────────────────────
-
-// const WalletDashboard = () => {
-//   const [balance, setBalance] = useState<number | null>(null);
-//   const [assets] = useState<WalletAsset[]>(DUMMY_ASSETS);
-//   const [hideBalance, setHideBalance] = useState(false);
-//   const [loading, setLoading] = useState(true);
-
-//   const totalUSD = assets.reduce((sum, a) => sum + a.usdValue, 0);
-
-//   useEffect(() => {
-//     const fetchBalance = async () => {
-//       try {
-//         const res = await api.get("/wallet/balance");
-//         setBalance(res.data);
-//       } catch (error) {
-//         console.error("Failed to fetch balance:", error);
-//         // Fall back to computed total from assets
-//         setBalance(totalUSD);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-//     fetchBalance();
-//   }, []);
-
-//   const displayBalance = balance ?? totalUSD;
-
-//   return (
-//     <div className="min-h-screen" style={{ background: C.bg, color: C.text }}>
-//       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
-
-//         {/* ── PAGE TITLE ── */}
-//         <div className="flex items-center justify-between">
-//           <div>
-//             <p className="text-xs font-medium uppercase tracking-widest" style={{ color: C.faint }}>
-//               My Wallet
-//             </p>
-//             <h1 className="text-xl font-semibold mt-0.5" style={{ color: C.text }}>
-//               Overview
-//             </h1>
-//           </div>
-//           <div className="flex items-center gap-2">
-//             <button
-//               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium"
-//               style={{ background: C.surface, color: C.muted, border: `1px solid ${C.border}` }}
-//             >
-//               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-//                 <path d="M12 5v14M5 12l7-7 7 7" />
-//               </svg>
-//               Deposit
-//             </button>
-//             <button
-//               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold hover:opacity-90 transition-opacity"
-//               style={{ background: C.text, color: "#000" }}
-//             >
-//               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-//                 <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
-//               </svg>
-//               Transfer
-//             </button>
-//           </div>
-//         </div>
-
-//         {/* ── BALANCE HERO ── */}
-//         <Card className="p-6 sm:p-8 relative overflow-hidden">
-//           {/* Glow */}
-//           <div
-//             className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
-//             style={{ background: "radial-gradient(circle, hsl(210 20% 98% / 0.03) 0%, transparent 70%)" }}
-//           />
-
-//           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-//             {/* Left: balance */}
-//             <div>
-//               <div className="flex items-center gap-2 mb-3">
-//                 <p className="text-xs font-medium uppercase tracking-widest" style={{ color: C.faint }}>
-//                   Total Balance
-//                 </p>
-//                 {/* Hide/show toggle */}
-//                 <button
-//                   onClick={() => setHideBalance((v) => !v)}
-//                   className="flex items-center justify-center w-5 h-5 rounded transition-colors"
-//                   style={{ color: C.faint }}
-//                 >
-//                   {hideBalance ? (
-//                     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-//                       <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22" />
-//                     </svg>
-//                   ) : (
-//                     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-//                       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />
-//                     </svg>
-//                   )}
-//                 </button>
-//               </div>
-
-//               {loading ? (
-//                 <div className="h-14 w-64 rounded-lg animate-pulse" style={{ background: C.surfaceHi }} />
-//               ) : (
-//                 <div className="flex items-end gap-3">
-//                   <p
-//                     className="font-mono font-bold leading-none"
-//                     style={{ fontSize: "clamp(2.2rem, 6vw, 3.5rem)", color: C.text }}
-//                   >
-//                     {hideBalance
-//                       ? "$ ••••••••"
-//                       : `$ ${displayBalance.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-//                   </p>
-//                   <span className="text-lg font-mono mb-1" style={{ color: C.faint }}>USDT</span>
-//                 </div>
-//               )}
-
-//               <div className="flex items-center gap-3 mt-3">
-//                 <span
-//                   className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded"
-//                   style={{ color: C.green, background: C.greenBg }}
-//                 >
-//                   ▲ +1.18%
-//                 </span>
-//                 <span className="text-xs" style={{ color: C.faint }}>24h change</span>
-//               </div>
-//             </div>
-
-//             {/* Right: quick stats */}
-//             <div className="flex gap-6 sm:gap-10">
-//               {[
-//                 { label: "Assets",    value: assets.length.toString() },
-//                 { label: "P&L Today", value: "+$824.30", positive: true },
-//                 { label: "Open Orders", value: "3" },
-//               ].map((s) => (
-//                 <div key={s.label} className="text-right">
-//                   <p className="text-xs" style={{ color: C.faint }}>{s.label}</p>
-//                   <p
-//                     className="text-sm font-semibold font-mono mt-0.5"
-//                     style={{ color: s.positive ? C.green : C.text }}
-//                   >
-//                     {s.value}
-//                   </p>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-
-//           {/* Sparkline */}
-//           <svg
-//             viewBox="0 0 400 40"
-//             className="w-full mt-6 opacity-30"
-//             preserveAspectRatio="none"
-//             style={{ height: "32px" }}
-//           >
-//             <defs>
-//               <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
-//                 <stop offset="0%" stopColor={C.text} stopOpacity="0.15" />
-//                 <stop offset="100%" stopColor={C.text} stopOpacity="0" />
-//               </linearGradient>
-//             </defs>
-//             <path
-//               d="M0,36 L30,30 L60,32 L100,22 L130,24 L170,14 L200,16 L240,9 L270,11 L310,5 L350,7 L400,2"
-//               stroke={C.text} strokeWidth="1.5" fill="none"
-//             />
-//             <path
-//               d="M0,36 L30,30 L60,32 L100,22 L130,24 L170,14 L200,16 L240,9 L270,11 L310,5 L350,7 L400,2 L400,40 L0,40 Z"
-//               fill="url(#wg)"
-//             />
-//           </svg>
-
-//           {/* Quick action row */}
-//           <div
-//             className="grid grid-cols-3 gap-3 mt-5 pt-5"
-//             style={{ borderTop: `1px solid ${C.border}` }}
-//           >
-//             {[
-//               { label: "Deposit",  icon: <path d="M12 19V5M5 12l7 7 7-7" /> },
-//               { label: "Withdraw", icon: <path d="M12 5v14M5 12l7-7 7 7" /> },
-//               { label: "Send",     icon: <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /> },
-//             ].map((a) => (
-//               <button
-//                 key={a.label}
-//                 className="flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-medium transition-colors"
-//                 style={{ background: C.surfaceHi, color: C.muted, border: `1px solid ${C.border}` }}
-//               >
-//                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-//                   {a.icon}
-//                 </svg>
-//                 {a.label}
-//               </button>
-//             ))}
-//           </div>
-//         </Card>
-
-//         <div>
-//           <div className="flex items-center justify-between mb-4">
-//             <h2 className="text-sm font-semibold" style={{ color: C.text }}>Your Assets</h2>
-//             <span className="text-xs" style={{ color: C.faint }}>{assets.length} tokens</span>
-//           </div>
-
-//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-//             {assets.map((asset) => {
-//               const isUp = asset.change24h >= 0;
-//               const pct = (asset.usdValue / totalUSD) * 100;
-
-//               return (
-//                 <Card
-//                   key={asset.symbol}
-//                   className="p-4 group cursor-pointer transition-colors hover:border-white/20"
-//                 >
-//                   {/* Header row */}
-//                   <div className="flex items-center justify-between mb-3">
-//                     <div className="flex items-center gap-2.5">
-//                       <TokenAvatar symbol={asset.symbol} />
-//                       <div>
-//                         <p className="text-xs font-semibold" style={{ color: C.text }}>{asset.symbol}</p>
-//                         <p className="text-xs mt-0.5" style={{ color: C.faint }}>{asset.name}</p>
-//                       </div>
-//                     </div>
-//                     <span
-//                       className="text-xs font-mono font-medium px-1.5 py-0.5 rounded"
-//                       style={{
-//                         color: isUp ? C.green : C.red,
-//                         background: isUp ? C.greenBg : C.redBg,
-//                       }}
-//                     >
-//                       {isUp ? "+" : ""}{asset.change24h}%
-//                     </span>
-//                   </div>
-
-//                   {/* Balance */}
-//                   <p
-//                     className="font-mono font-bold text-lg leading-none"
-//                     style={{ color: C.text }}
-//                   >
-//                     {hideBalance ? "••••••" : asset.balance.toLocaleString("en-US", { maximumFractionDigits: 6 })}
-//                   </p>
-//                   <p className="text-xs font-mono mt-1" style={{ color: C.faint }}>
-//                     {hideBalance
-//                       ? "$ ••••••"
-//                       : `≈ $${asset.usdValue.toLocaleString("en-US", { minimumFractionDigits: 2 })}`}
-//                   </p>
-
-//                   {/* Allocation bar */}
-//                   <div className="mt-3">
-//                     <div
-//                       className="w-full h-1 rounded-full overflow-hidden"
-//                       style={{ background: C.surfaceHi }}
-//                     >
-//                       <div
-//                         className="h-full rounded-full transition-all duration-500"
-//                         style={{ width: `${pct}%`, background: C.muted }}
-//                       />
-//                     </div>
-//                     <div className="flex items-center justify-between mt-1.5">
-//                       <span className="text-xs" style={{ color: C.faint }}>{pct.toFixed(1)}% of portfolio</span>
-//                       <Link
-//                         href={`/in/spot/${asset.symbol.toLowerCase()}usdt`}
-//                         className="text-xs font-medium transition-colors opacity-0 group-hover:opacity-100"
-//                         style={{ color: C.muted }}
-//                         onClick={(e) => e.stopPropagation()}
-//                       >
-//                         Trade →
-//                       </Link>
-//                     </div>
-//                   </div>
-//                 </Card>
-//               );
-//             })}
-//           </div>
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default WalletDashboard;
+}

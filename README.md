@@ -1,4 +1,29 @@
-npm 
+# Crypto Exchange
+
+This is a feature-rich cryptocurrency exchange platform built with Next.js. It provides users with a simulated environment for real-time crypto trading, complete with live market data, advanced charting, and secure wallet management.
+
+![Crypto Exchange Dashboard](https://i.imgur.com/your-dashboard-image.png)
+![Crypto Exchange Landing Page](https://i.imgur.com/your-landing-page-image.png)
+
+## Features
+
+*   **Live Trading Dashboard:** View real-time price charts using an integrated TradingView widget.
+*   **Real-time Order Book:** See live buy and sell orders.
+*   **Spot Trading:** Place Market and Limit orders to buy and sell cryptocurrencies.
+*   **Wallet Management:** View your wallet balance and manage your assets.
+*   **Authentication:** Secure user login and signup functionality.
+*   **Comprehensive Trade History:** Track your open orders, order history, and past trades.
+*   **Multiple Markets:** Support for various cryptocurrency trading pairs.
+
+## Built With
+
+*   [Next.js](https://nextjs.org/)
+*   [React](https://reactjs.org/)
+*   [TypeScript](https://www.typescriptlang.org/)
+*   [Redux Toolkit](https://redux-toolkit.js.org/)
+*   [Tailwind CSS](https://tailwindcss.com/)
+*   [Axios](https://axios-http.com/)
+*   [ws (WebSockets)](https://github.com/websockets/ws)
 
 ## Getting Started
 
