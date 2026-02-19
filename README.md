@@ -2,8 +2,8 @@
 
 This is a feature-rich cryptocurrency exchange platform built with Next.js. It provides users with a simulated environment for real-time crypto trading, complete with live market data, advanced charting, and secure wallet management.
 
-![Crypto Exchange Dashboard](https://i.imgur.com/your-dashboard-image.png)
-![Crypto Exchange Landing Page](https://i.imgur.com/your-landing-page-image.png)
+![Crypto Exchange Landing Page](https://ibb.co/8LWgJ8YD)
+![Crypto Exchange Dashboard](https://ibb.co/8gkVZvYH)
 
 ## Features
 
