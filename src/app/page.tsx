@@ -3,58 +3,6 @@
 import Link from 'next/link';
 
 const page = () => {
-  const coins = [
-    {
-      name: 'Bitcoin',
-      ticker: 'BTC',
-      price: '$65,432.10',
-      change: '+1.25%',
-      positive: true,
-      marketCap: '$1.29T',
-      volume: '$38.4B',
-      spark: 'M0,20 L10,18 L20,15 L30,17 L40,10 L50,12 L60,6 L70,8 L80,3',
-    },
-    {
-      name: 'Ethereum',
-      ticker: 'ETH',
-      price: '$3,512.80',
-      change: '-0.50%',
-      positive: false,
-      marketCap: '$422.1B',
-      volume: '$17.2B',
-      spark: 'M0,8 L10,10 L20,9 L30,13 L40,14 L50,16 L60,15 L70,18 L80,20',
-    },
-    {
-      name: 'Tether',
-      ticker: 'USDT',
-      price: '$1.00',
-      change: '+0.01%',
-      positive: true,
-      marketCap: '$112.5B',
-      volume: '$55.1B',
-      spark: 'M0,11 L10,11 L20,11 L30,12 L40,11 L50,11 L60,12 L70,11 L80,11',
-    },
-    {
-      name: 'Solana',
-      ticker: 'SOL',
-      price: '$135.70',
-      change: '+3.80%',
-      positive: true,
-      marketCap: '$62.7B',
-      volume: '$4.8B',
-      spark: 'M0,22 L10,19 L20,16 L30,18 L40,12 L50,10 L60,7 L70,5 L80,2',
-    },
-    {
-      name: 'BNB',
-      ticker: 'BNB',
-      price: '$589.50',
-      change: '-1.10%',
-      positive: false,
-      marketCap: '$87.0B',
-      volume: '$2.1B',
-      spark: 'M0,6 L10,8 L20,7 L30,10 L40,12 L50,14 L60,13 L70,16 L80,18',
-    },
-  ];
 
   const steps = [
     {

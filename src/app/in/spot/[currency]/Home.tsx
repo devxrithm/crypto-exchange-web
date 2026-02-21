@@ -1,5 +1,4 @@
 "use client"
-
 import LivePrices from "@/src/components/dashboard/LivePricesTab";
 import Orderbook from "@/src/components/dashboard/OrderBook";
 import OrderBlock from "@/src/components/dashboard/OrderBlock";
@@ -8,21 +7,45 @@ import Ticker from "@/src/components/dashboard/Ticker";
 import WalletContainer from "@/src/components/dashboard/WalletContainer";
 import { Provider } from "react-redux";
 import { store } from "@/src/context/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderHistory from "@/src/components/dashboard/TradeContainer/OrderHistory";
 import OpenOrder from "@/src/components/dashboard/TradeContainer/OpenOrder";
 import TradeHistory from "@/src/components/dashboard/TradeContainer/TradeHistory";
 import { useParams } from "next/navigation";
 
 export default function Home() {
-
+    const [messages, setMessages] = useState<string[]>([]);
     const params = useParams()
-
     const [activeTab, setActiveTab] = useState<
         "OPEN_ORDER" | "ORDER_HISTORY" | "TRADE_HISTORY" | "HOLDING"
     >("OPEN_ORDER");
 
+    useEffect(() => {
+        const socket = new WebSocket(
+            "wss://8080-firebase-backend-exchange-hq-1770455802984.cluster-nle52mxuvfhlkrzyrq6g2cwb52.cloudworkstations.dev/ws"
+        );
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
 
+        socket.onmessage = (event) => {
+            console.log("message", event.data);
+            setMessages((prev) => [...prev, event.data]);
+        };
+
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+
+        // Cleanup on unmount
+        return () => {
+            socket.close();
+        };
+    }, []);
     return (
         <>
             <Provider store={store}>
