@@ -1,12 +1,11 @@
 ## Crypto Exchange
 
 This is a feature-rich cryptocurrency exchange platform built with Next.js. It provides users with a simulated environment for real-time crypto trading, complete with live market data, advanced charting, and secure wallet management.
-<div align="center">
+
 [![qFBvK8v.md.png](https://iili.io/qFBvK8v.md.png)](https://freeimage.host/i/qFBvK8v)
-  </div>
-<div align="center">
+
  [![qFB8Yga.md.png](https://iili.io/qFB8Yga.md.png)](https://freeimage.host/i/qFB8Yga)
-</div>
+
 
 ## Features
 
