@@ -189,12 +189,14 @@ export default function MarketPage() {
                                             className="border-b border-slate-900 hover:bg-slate-900/50 transition-colors"
                                         >
                                             <td className="px-3 py-2 text-slate-50 font-medium">
-
-                                                {item.s}
-
+                                                <Link href={`/in/spot/${item.s}`}>
+                                                    {item.s}
+                                                </Link>
                                             </td>
                                             <td className={`px-3 py-2 text-right font-mono text-slate-300`}>
-                                                {item.p}
+                                            <Link href={`/in/spot/${item.s}`}>
+                                                    {item.p}
+                                                </Link>
                                             </td>
                                         </tr>
                                     );
