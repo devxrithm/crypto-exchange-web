@@ -4,12 +4,14 @@ interface TickerTapeProps {
   symbols?: string;
   hideChart?: boolean;
   itemSize?: "regular" | "compact" | "large";
+  theme:"dark"
 }
 
 const TickerTape = ({
   symbols = "BINANCE:BTCUSDT,BINANCE:ETHUSDT,BINANCE:XRPUSDT,BINANCE:DOGEUSDT,BINANCE:BNBUSDT,BINANCE:LINKUSDT,BINANCE:AVAXUSDT",
   hideChart = true,
   itemSize = "compact",
+  theme="dark"
 }: TickerTapeProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +31,7 @@ const TickerTape = ({
     ticker.setAttribute("symbols", symbols);
     if (hideChart) ticker.setAttribute("hide-chart", "");
     ticker.setAttribute("item-size", itemSize);
+    ticker.setAttribute("theme", theme);
     container.appendChild(ticker);
 
     return () => {

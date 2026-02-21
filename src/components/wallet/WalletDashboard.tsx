@@ -49,8 +49,13 @@ export default function WalletDashboard() {
 
   return (
     <>
-      <TradingViewTickerTape />
-      <div className="bg-[#080810] text-white px-5 py-10 min-h-screen">
+      <TradingViewTickerTape
+        symbols="BINANCE:BTCUSDT,BINANCE:ETHUSDT,BINANCE:XRPUSDT,BINANCE:DOGEUSDT,BINANCE:BNBUSDT,BINANCE:LINKUSDT,BINANCE:AVAXUSDT"
+        hideChart= {true}
+        itemSize="compact"
+        theme="dark"
+      />
+      <div className="bg-[#080810] text-white px-5 py-5 min-h-screen">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
           <div className="w-full lg:w-[70%]">
             <div className="border p-6 rounded-sm border-gray-700 h-full">
