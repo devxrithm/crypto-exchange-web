@@ -43,6 +43,10 @@ export default function WalletDashboard() {
     return <div className="min-h-screen bg-[#080810] text-white flex items-center justify-center">Loading wallet...</div>;
   }
 
+  if (error) {
+    return <div className="min-h-screen bg-[#080810] text-white flex items-center justify-center">Error: {error}</div>;
+  }
+
   return (
     <>
       <TradingViewTickerTape />
