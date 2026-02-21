@@ -5,12 +5,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import TradingViewTickerTape from './TradingViewTickerTape';
 import TradingViewMarketSummary from './TradingViewMarketSummary';
-
-interface WalletAsset {
-  asset: string;
-  user: string;
-  balance: number;
-}
+import { WalletAsset } from '@/src/lib/types';
 
 export default function WalletDashboard() {
   const [assets, setAssets] = useState<WalletAsset[]>([]);
@@ -51,7 +46,7 @@ export default function WalletDashboard() {
     <>
       <TradingViewTickerTape
         symbols="BINANCE:BTCUSDT,BINANCE:ETHUSDT,BINANCE:XRPUSDT,BINANCE:DOGEUSDT,BINANCE:BNBUSDT,BINANCE:LINKUSDT,BINANCE:AVAXUSDT"
-        hideChart= {true}
+        hideChart={true}
         itemSize="compact"
         theme="dark"
       />

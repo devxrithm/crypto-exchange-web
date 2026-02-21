@@ -1,11 +1,5 @@
+import { TickerTapeProps } from "@/src/lib/types";
 import { useEffect, useRef } from "react";
-
-interface TickerTapeProps {
-  symbols?: string;
-  hideChart?: boolean;
-  itemSize?: "regular" | "compact" | "large";
-  theme:"dark"
-}
 
 const TickerTape = ({
   symbols = "BINANCE:BTCUSDT,BINANCE:ETHUSDT,BINANCE:XRPUSDT,BINANCE:DOGEUSDT,BINANCE:BNBUSDT,BINANCE:LINKUSDT,BINANCE:AVAXUSDT",

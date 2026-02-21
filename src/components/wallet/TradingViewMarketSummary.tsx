@@ -1,12 +1,5 @@
+import { MarketSummaryProps } from "@/src/lib/types";
 import { useEffect, useRef } from "react";
-
-interface MarketSummaryProps {
-  showTimeRange?: boolean;
-  direction?: "vertical" | "horizontal";
-  assetsType?: "crypto" | "stocks" | "forex" | "futures";
-  itemSize: string;
-  theme: string
-}
 
 const TradingViewMarketSummary = ({
   showTimeRange = true,

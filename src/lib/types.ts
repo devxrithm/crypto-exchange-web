@@ -29,3 +29,24 @@ export interface ClosePosition {
     orderSide: "BUY" | "SELL";
     _id: string;
   }
+
+  export interface WalletAsset {
+    asset: string;
+    user: string;
+    balance: number;
+  }
+
+  export interface TickerTapeProps {
+    symbols?: string;
+    hideChart?: boolean;
+    itemSize?: "regular" | "compact" | "large";
+    theme:"dark"
+  }
+
+  export interface MarketSummaryProps {
+    showTimeRange?: boolean;
+    direction?: "vertical" | "horizontal";
+    assetsType?: "crypto" | "stocks" | "forex" | "futures";
+    itemSize: string;
+    theme: string
+  }
