@@ -5,7 +5,7 @@ import OrderBlock from "@/src/components/dashboard/OrderBlock";
 import TradingViewWidget from "@/src/components/dashboard/TradingViewWidget";
 import Ticker from "@/src/components/dashboard/Ticker";
 import WalletContainer from "@/src/components/dashboard/WalletContainer";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "@/src/context/store";
 import { useEffect, useState } from "react";
 import OrderHistory from "@/src/components/dashboard/TradeContainer/OrderHistory";
@@ -13,6 +13,7 @@ import OpenOrder from "@/src/components/dashboard/TradeContainer/OpenOrder";
 import TradeHistory from "@/src/components/dashboard/TradeContainer/TradeHistory";
 import { useParams } from "next/navigation";
 import { IoIosCloseCircle } from "react-icons/io";
+import { changeSocketStatus } from "@/src/context/features/socketSlice";
 
 export default function Home() {
   const [messages, setMessages] = useState<string | null>(null);
@@ -21,6 +22,9 @@ export default function Home() {
     "OPEN_ORDER" | "ORDER_HISTORY" | "TRADE_HISTORY" | "HOLDING"
   >("OPEN_ORDER");
 
+  //add context for socket status
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const socket = new WebSocket("ws://localhost:8080/ws");
     socket.onopen = () => {
@@ -28,9 +32,8 @@ export default function Home() {
     };
 
     socket.onmessage = (event) => {
-      console.log("message", event);
       setMessages((prev) => (prev ? `${prev}\n${event.data}` : event.data));
-
+      dispatch(changeSocketStatus());
       setTimeout(() => {
         setMessages(null);
       }, 5000);

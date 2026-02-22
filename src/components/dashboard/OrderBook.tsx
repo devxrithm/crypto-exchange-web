@@ -1,7 +1,10 @@
+import { changeSocketStatus } from "@/src/context/features/socketSlice";
+import { RootState } from "@/src/context/store";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 type OrderBookItem = {
   value: string;
@@ -10,28 +13,37 @@ type OrderBookItem = {
 
 const Orderbook = () => {
   const [buyData, setBuyData] = useState<OrderBookItem[]>([]);
-  const [sellData, setSellata] = useState<OrderBookItem[]>([]);
+  const [sellData, setSellData] = useState<OrderBookItem[]>([]);
   const [error, setError] = useState("");
-  const param = useParams()
+  const param = useParams();
+  const isChanging = useSelector((state: RootState) => state.socket.status);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const buyRes = await api.get(`/api/order-book/buy-order-book/${param.currency}`);
-        const sellRes = await api.get(`/api/order-book/sell-order-book/${param.currency}`);
+        const buyRes = await api.get(
+          `/api/order-book/buy-order-book/${param.currency}`,
+        );
+        const sellRes = await api.get(
+          `/api/order-book/sell-order-book/${param.currency}`,
+        );
         setBuyData(buyRes.data.book);
-        setSellata(sellRes.data.book);
-
+        setSellData(sellRes.data.book);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setError(error.response?.data?.message || "Failed to fetch orderbook");
+          setError(
+            error.response?.data?.message || "Failed to fetch orderbook",
+          );
         } else {
           setError("Something went wrong");
         }
+      } finally {
+        dispatch(changeSocketStatus());
       }
     };
     fetchData();
-  }, []);
+  }, [isChanging, param.currency, dispatch]);
 
   return (
     <>
@@ -39,21 +51,19 @@ const Orderbook = () => {
         <h1 className="mx-3">Orderbook</h1>
         <hr className="text-gray-700 mt-2 mx-2" />
 
-        {error && (
-          <p className="text-red-400 text-xs px-3 py-2">{error}</p>
-        )}
+        {error && <p className="text-red-400 text-xs px-3 py-2">{error}</p>}
 
         <div className="max-h-90 overflow-y-auto">
           <table className="w-full text-xs">
             <thead className="sticky top-0 z-10 bg-black">
               <tr className="text-slate-500">
-                <th className="px-3 py-1.5 text-left font-medium min-w-[2rem]">
+                <th className="px-3 py-1.5 text-left font-medium min-w-8">
                   Price
                 </th>
-                <th className="px-3 py-1.5 text-right font-medium min-w-[2rem]">
+                <th className="px-3 py-1.5 text-right font-medium min-w-8">
                   QTY
                 </th>
-                <th className="px-3 py-1.5 text-right font-medium min-w-[2rem]">
+                <th className="px-3 py-1.5 text-right font-medium min-w-8">
                   Amount
                 </th>
               </tr>
@@ -71,9 +81,9 @@ const Orderbook = () => {
                 </tr>
               ) : (
                 buyData.map((item) => {
-                  const qty = item.value.split('|')
-                  const quantity = Number(qty[2])
-                  const amount = (quantity * Number(item.score)).toFixed(2)
+                  const qty = item.value.split("|");
+                  const quantity = Number(qty[2]);
+                  const amount = (quantity * Number(item.score)).toFixed(2);
 
                   return (
                     <tr
@@ -90,15 +100,13 @@ const Orderbook = () => {
                         {amount}
                       </td>
                     </tr>
-                  )
+                  );
                 })
               )}
             </tbody>
           </table>
 
-          <div className="py-3 px-2 font-bold text-white text-2xl">
-            72,000
-          </div>
+          <div className="py-3 px-2 font-bold text-white text-2xl">72,000</div>
           {/* sell order book */}
 
           <table className="w-full text-xs">
@@ -114,9 +122,9 @@ const Orderbook = () => {
                 </tr>
               ) : (
                 sellData.map((item) => {
-                  const qty = item.value.split('|')
-                  const quantity = Number(qty[2])
-                  const amount = (quantity * Number(item.score)).toFixed(2)
+                  const qty = item.value.split("|");
+                  const quantity = Number(qty[2]);
+                  const amount = (quantity * Number(item.score)).toFixed(2);
 
                   return (
                     <tr
@@ -133,7 +141,7 @@ const Orderbook = () => {
                         {amount}
                       </td>
                     </tr>
-                  )
+                  );
                 })
               )}
             </tbody>

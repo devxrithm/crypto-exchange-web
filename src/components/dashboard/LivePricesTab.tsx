@@ -91,10 +91,10 @@ const LivePrices = () => {
         <table className="w-full text-xs">
           <thead className="sticky top-0 z-10 bg-black">
             <tr className="text-slate-500">
-              <th className="px-3 py-1.5 text-left font-medium min-w-[6rem]">
+              <th className="px-3 py-1.5 text-left font-medium min-w-24">
                 Asset
               </th>
-              <th className="px-3 py-1.5 text-right font-medium min-w-[6rem]">
+              <th className="px-3 py-1.5 text-right font-medium min-w-24">
                 Mark Price
               </th>
             </tr>
