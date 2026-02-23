@@ -1,9 +1,9 @@
 import React from 'react'
-import Home from './Home'
+import HomeExport from './HomeExport'
 
 const page = () => {
   return (
-    <Home/>
+    <HomeExport/>
   )
 }
 

@@ -5,7 +5,7 @@ import OrderBlock from "@/src/components/dashboard/OrderBlock";
 import TradingViewWidget from "@/src/components/dashboard/TradingViewWidget";
 import Ticker from "@/src/components/dashboard/Ticker";
 import WalletContainer from "@/src/components/dashboard/WalletContainer";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { store } from "@/src/context/store";
 import { useEffect, useState } from "react";
 import OrderHistory from "@/src/components/dashboard/TradeContainer/OrderHistory";
@@ -25,11 +25,13 @@ export default function Home() {
   //add context for socket status
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080/ws");
-    socket.onopen = () => {
-      console.log("Connected to WebSocket server");
-    };
+    useEffect(() => {
+        const socket = new WebSocket(
+            "wss://8080-firebase-backend-exchange-hq-1770455802984.cluster-nle52mxuvfhlkrzyrq6g2cwb52.cloudworkstations.dev/ws"
+        );
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
 
     socket.onmessage = (event) => {
       setMessages((prev) => (prev ? `${prev}\n${event.data}` : event.data));
@@ -47,36 +49,35 @@ export default function Home() {
       console.log("WebSocket connection closed");
     };
 
-    // Cleanup on unmount
-    return () => {
-      socket.close();
-    };
-  }, []);
-
-  return (
-    <>
-      <Provider store={store}>
-        <div className="flex justify-between items-center mt-5 px-3">
-          <Ticker token={String(params.currency)} />
-          <WalletContainer />
-        </div>
-        <hr className="text-gray-700 mt-2" />
-        <div className="flex justify-evenly ">
-          <div className="flex flex-col mx-3">
-            <Orderbook />
-            <hr className="text-gray-700 mt-2" />
-            <LivePrices />
-          </div>
-          <div className="border-r border-r-gray-600 h-202"></div>
-          <div className="mx-2">
-            <div className="flex justify-around gap-3">
-              <div className="min-w-[60%]">
-                <TradingViewWidget symbol={"btcusdt"} />
-              </div>
-              <div className="border-r border-r-gray-600 h-106"></div>
-              <OrderBlock />
-            </div>
-            <hr className="text-gray-700 mt-2" />
+        // Cleanup on unmount
+        return () => {
+            socket.close();
+        };
+    }, []);
+    return (
+        <>
+            <Provider store={store}>
+                <div className="flex justify-between items-center mt-5 px-3">
+                    <Ticker token={String(params.currency)} />
+                    <WalletContainer />
+                </div>
+                <hr className="text-gray-700 mt-2" />
+                <div className="flex justify-evenly ">
+                    <div className="flex flex-col mx-3">
+                        <Orderbook />
+                        <hr className="text-gray-700 mt-2" />
+                        <LivePrices />
+                    </div>
+                    <div className="border-r border-r-gray-600 h-202"></div>
+                    <div className="mx-2">
+                        <div className="flex justify-around gap-3">
+                            <div className="min-w-[60%]">
+                                <TradingViewWidget symbol={"btcusdt"} />
+                            </div>
+                            <div className="border-r border-r-gray-600 h-106"></div>
+                            <OrderBlock />
+                        </div>
+                        <hr className="text-gray-700 mt-2" />
 
             <div className="w-full text-white mt-2 bg-[#0b0e11] rounded-sm p-5 mb-5 min-h-92">
               <div className="flex gap-5 text-sm font-semibold text-gray-400">
@@ -114,24 +115,14 @@ export default function Home() {
                 </button>
               </div>
 
-              {activeTab === "OPEN_ORDER" && <OpenOrder />}
-              {activeTab === "ORDER_HISTORY" && <OrderHistory />}
-              {activeTab === "TRADE_HISTORY" && <TradeHistory />}
-            </div>
-          </div>
-        </div>
-        {messages && (
-          <div className="fixed border-b-4 min-w-64 justify-center top-[90%] left-[90%] -translate-x-1/2 z-50 bg-emerald-500 text-white px-2 py-5 rounded-lg shadow-lg flex items-center gap-3 animate-fade-in">
-            <span className="text-sm font-semibold">{messages}</span>
-            <button
-              onClick={() => setMessages(null)}
-              className="text-white hover:text-gray-200 text-lg leading-none"
-            >
-              <IoIosCloseCircle />
-            </button>
-          </div>
-        )}
-      </Provider>
-    </>
-  );
+                            {activeTab === "OPEN_ORDER" && <OpenOrder />}
+                            {activeTab === "ORDER_HISTORY" && <OrderHistory />}
+                            {activeTab === "TRADE_HISTORY" && <TradeHistory />}
+                        </div>
+                    </div>
+                </div >
+            </Provider >
+        </>
+
+    );
 }
