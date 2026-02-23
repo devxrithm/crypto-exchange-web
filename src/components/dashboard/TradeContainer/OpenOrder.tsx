@@ -6,13 +6,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { OpenPosition } from "@/src/lib/types";
 import { RootState } from "@/src/context/store";
+import { changeSocketStatus } from "@/src/context/features/socketSlice";
 
 const OpenOrder = () => {
   const [data, setData] = useState<OpenPosition[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const isChanging = useSelector((state: RootState) => state.order.orderCount)
+  const isChanging = useSelector((state: RootState) => state.order.orderCount);
+  const isSocketChanging = useSelector(
+    (state: RootState) => state.socket.status,
+  );
 
-  const dispatch = useDispatch()
+  console.log(isSocketChanging, "socket status in OpenOrder");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchOpenPositions = async () => {
@@ -25,11 +30,13 @@ const OpenOrder = () => {
         } else {
           setError("Something went wrong");
         }
+      } finally {
+        dispatch(changeSocketStatus());
       }
     };
 
     fetchOpenPositions();
-  }, [isChanging, dispatch]);
+  }, [isChanging, isSocketChanging, dispatch]);
 
   return (
     <table className="w-full px-5 text-sm mt-5">
@@ -53,10 +60,7 @@ const OpenOrder = () => {
             </td>
           </tr>
         )}
-        <tr
-
-          className="text-gray-300 text-center  text-sm "
-        >
+        <tr className="text-gray-300 text-center  text-sm ">
           <td className="py-1"></td>
           <td className="py-1"></td>
           <td className="py-1"></td>
@@ -64,7 +68,6 @@ const OpenOrder = () => {
           <td className="py-1"></td>
           <td className="py-1"></td>
           <td className="py-1"></td>
-
         </tr>
         {data.map((order) => (
           <tr
@@ -78,14 +81,14 @@ const OpenOrder = () => {
             <td className="py-3">{order.orderType}</td>
             <td className="py-3">{order.positionStatus}</td>
             <td
-              className={`py-3 ${order.orderSide === "BUY" ? "text-green-400" : "text-red-400"
-                }`}
+              className={`py-3 ${
+                order.orderSide === "BUY" ? "text-green-400" : "text-red-400"
+              }`}
             >
               {order.orderSide}
             </td>
           </tr>
         ))}
-
       </tbody>
     </table>
   );

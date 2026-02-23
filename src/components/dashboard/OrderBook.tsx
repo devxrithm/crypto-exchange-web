@@ -17,6 +17,8 @@ const Orderbook = () => {
   const [error, setError] = useState("");
   const param = useParams();
   const isChanging = useSelector((state: RootState) => state.socket.status);
+
+  console.log("Orderbook component re-rendered. Socket status:", isChanging);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -1,16 +1,16 @@
-import React from 'react'
-import Home from './Home'
+"use client";
+import Home from "./Home";
 import { Provider } from "react-redux";
 import { store } from "@/src/context/store";
 
 const HomeExport = () => {
-    return (
-        <>
-            <Provider store={store}>
-                <Home />
-            </Provider>
-        </>
-    )
-}
+  return (
+    <>
+      <Provider store={store}>
+        <Home />
+      </Provider>
+    </>
+  );
+};
 
-export default HomeExport
+export default HomeExport;
