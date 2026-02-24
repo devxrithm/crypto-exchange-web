@@ -1,10 +1,9 @@
-import { changeSocketStatus } from "@/src/context/features/socketSlice";
 import { RootState } from "@/src/context/store";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 type OrderBookItem = {
   value: string;
@@ -16,10 +15,10 @@ const Orderbook = () => {
   const [sellData, setSellData] = useState<OrderBookItem[]>([]);
   const [error, setError] = useState("");
   const param = useParams();
+  const orderCount = useSelector((state: RootState) => state.order.orderCount);
   const isChanging = useSelector((state: RootState) => state.socket.status);
 
   console.log("Orderbook component re-rendered. Socket status:", isChanging);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,12 +39,10 @@ const Orderbook = () => {
         } else {
           setError("Something went wrong");
         }
-      } finally {
-        dispatch(changeSocketStatus());
       }
     };
     fetchData();
-  }, [isChanging, param.currency, dispatch]);
+  }, [isChanging, orderCount, param.currency]);
 
   return (
     <>

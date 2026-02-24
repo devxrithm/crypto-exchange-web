@@ -50,7 +50,7 @@ export default function Home() {
     return () => {
       socket.close();
     };
-  }, [messages, dispatch]);
+  }, [dispatch]);
   
   return (
     <>

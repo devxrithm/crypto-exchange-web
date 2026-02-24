@@ -1,7 +1,7 @@
 "use client";
 
-import { resetOrderChange } from "@/src/context/features/orderSlice";
 import { changeWalletState } from "@/src/context/features/walletSlice";
+import { RootState } from "@/src/context/store";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -17,7 +17,10 @@ const WalletContainer = () => {
   const [tokenBalance, setTokenBalance] = useState(0);
   const [error, setError] = useState("");
 
-  const isChanging = useSelector((state: any) => state.order.orderCount)
+  const isChanging = useSelector((state: RootState) => state.order.orderCount);
+  const isSocketChanging = useSelector(
+    (state: RootState) => state.socket.status,
+  );
   console.log(isChanging)
   const dispatch = useDispatch()
 
@@ -29,7 +32,6 @@ const WalletContainer = () => {
         setTokenBalance(Number(res.data.data.asset2));
 
         dispatch(changeWalletState(res.data.data))
-        dispatch(resetOrderChange());
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.response?.data?.message || "Login failed");
@@ -39,7 +41,7 @@ const WalletContainer = () => {
       }
     };
     fetchBalance();
-  }, [isChanging]);
+  }, [isChanging, isSocketChanging, asset, dispatch]);
 
   return (
     <>

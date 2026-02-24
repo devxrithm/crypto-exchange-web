@@ -7,7 +7,7 @@ const socketSlice = createSlice({
     },
     reducers: {
         changeSocketStatus: (state) => {
-            state.status = true;
+            state.status = !state.status;
         },
         resetSocketStatus: (state) => {
             state.status = false;

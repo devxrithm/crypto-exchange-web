@@ -1,17 +1,18 @@
 "use client";
-import { resetOrderChange } from "@/src/context/features/orderSlice";
 import { api } from "@/src/lib/axios";
+import { RootState } from "@/src/context/store";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { OrderHistory } from "@/src/lib/types";
 
 const TradeHistory = () => {
   const [data, setData] = useState<OrderHistory[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const isChanging = useSelector((state: any) => state.order.isChanging)
-
-  const dispatch = useDispatch()
+  const isChanging = useSelector((state: RootState) => state.order.orderCount);
+  const isSocketChanging = useSelector(
+    (state: RootState) => state.socket.status,
+  );
 
   useEffect(() => {
     const fetchTradeHistory = async () => {
@@ -26,13 +27,10 @@ const TradeHistory = () => {
           setError("Something went wrong");
         }
       }
-      finally {
-        dispatch(resetOrderChange());
-      }
     };
 
     fetchTradeHistory();
-  }, []);
+  }, [isChanging, isSocketChanging]);
 
   return (
 

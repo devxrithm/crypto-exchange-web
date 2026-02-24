@@ -1,12 +1,10 @@
 "use client";
-import { resetOrderChange } from "@/src/context/features/orderSlice";
 import { api } from "@/src/lib/axios";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { OpenPosition } from "@/src/lib/types";
 import { RootState } from "@/src/context/store";
-import { changeSocketStatus } from "@/src/context/features/socketSlice";
 
 const OpenOrder = () => {
   const [data, setData] = useState<OpenPosition[]>([]);
@@ -17,8 +15,6 @@ const OpenOrder = () => {
   );
 
   console.log(isSocketChanging, "socket status in OpenOrder");
-  const dispatch = useDispatch();
-
   useEffect(() => {
     const fetchOpenPositions = async () => {
       try {
@@ -30,13 +26,11 @@ const OpenOrder = () => {
         } else {
           setError("Something went wrong");
         }
-      } finally {
-        dispatch(changeSocketStatus());
       }
     };
 
     fetchOpenPositions();
-  }, [isChanging, isSocketChanging, dispatch]);
+  }, [isChanging, isSocketChanging]);
 
   return (
     <table className="w-full px-5 text-sm mt-5">
