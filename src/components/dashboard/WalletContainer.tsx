@@ -21,7 +21,8 @@ const WalletContainer = () => {
   const isSocketChanging = useSelector(
     (state: RootState) => state.socket.status,
   );
-  console.log(isChanging)
+  console.log(isChanging, isSocketChanging)
+  
   const dispatch = useDispatch()
 
   useEffect(() => {
