@@ -14,10 +14,9 @@ const Orderbook = () => {
   const [buyData, setBuyData] = useState<OrderBookItem[]>([]);
   const [sellData, setSellData] = useState<OrderBookItem[]>([]);
   const [error, setError] = useState("");
-
   const param = useParams();
   const currency = String(param.currency ?? "");
-
+  const orderCount = useSelector((state: RootState) => state.order.orderCountStatus);
   const isChanging = useSelector((state: RootState) => state.socket.status);
 
   useEffect(() => {
@@ -26,12 +25,21 @@ const Orderbook = () => {
       try {
         const buyRes = await api.get(
           `/api/order-book/buy-order-book/${currency}`,
+          {
+            params: { t: Date.now() },
+            headers: { "Cache-Control": "no-cache" },
+          },
         );
         const sellRes = await api.get(
           `/api/order-book/sell-order-book/${currency}`,
+          {
+            params: { t: Date.now() },
+            headers: { "Cache-Control": "no-cache" },
+          },
         );
         setBuyData(buyRes.data.book);
         setSellData(sellRes.data.book);
+        setError("");
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(
@@ -43,7 +51,8 @@ const Orderbook = () => {
       }
     };
     fetchData();
-  }, [currency, isChanging]);
+
+  }, [currency, isChanging, orderCount]);
 
   return (
     <>

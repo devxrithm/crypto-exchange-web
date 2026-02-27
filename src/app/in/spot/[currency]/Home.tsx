@@ -30,9 +30,16 @@ export default function Home() {
       console.log("Connected to WebSocket server");
     };
 
-    socket.onmessage = (event) => {
-      setMessages((prev) => (prev ? `${prev}\n${event.data}` : event.data));
-      dispatch(changeSocketStatus());
+    socket.onmessage = ({ data }) => {
+      const { event, message } = JSON.parse(data);
+      console.log("Received message:", event, message);
+      if (event === "order") {
+        setMessages(message);
+        dispatch(changeSocketStatus());
+      } else {
+        dispatch(changeSocketStatus());
+      }
+
       setTimeout(() => {
         setMessages(null);
       }, 2000);
@@ -51,7 +58,7 @@ export default function Home() {
       socket.close();
     };
   }, [dispatch]);
-  
+
   return (
     <>
       <div className="flex justify-between items-center mt-5 px-3">
