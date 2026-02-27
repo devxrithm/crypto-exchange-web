@@ -9,30 +9,29 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const WalletContainer = () => {
-
-  const param = useParams()
-  const asset = String(param.currency).toUpperCase().replace("USDT", "")
+  const param = useParams();
+  const asset = String(param.currency).toUpperCase().replace("USDT", "");
 
   const [balance, setBalance] = useState(0);
   const [tokenBalance, setTokenBalance] = useState(0);
   const [error, setError] = useState("");
 
-  const isChanging = useSelector((state: RootState) => state.order.orderCount);
   const isSocketChanging = useSelector(
     (state: RootState) => state.socket.status,
   );
-  console.log(isChanging, isSocketChanging)
-  
-  const dispatch = useDispatch()
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        const res = await api.get(`/api/wallet/getuserbalance?asset1=USDT&asset2=${asset}`);
+        const res = await api.get(
+          `/api/wallet/getuserbalance?asset1=USDT&asset2=${asset}`,
+        );
         setBalance(Number(res.data.data.asset1));
         setTokenBalance(Number(res.data.data.asset2));
 
-        dispatch(changeWalletState(res.data.data))
+        dispatch(changeWalletState(res.data.data));
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.response?.data?.message || "Login failed");
@@ -42,7 +41,8 @@ const WalletContainer = () => {
       }
     };
     fetchBalance();
-  }, [isChanging, isSocketChanging, asset, dispatch]);
+  }, [asset, isSocketChanging, dispatch]);
+
 
   return (
     <>
@@ -57,7 +57,9 @@ const WalletContainer = () => {
         </div>
         <div className="py-3 px-4  rounded-sm bg-[#0b0e11] flex flex-col justify-center items-right ">
           <p className="text-sm text-gray-300">{asset} Wallet</p>
-          <p className="font-bold text-gray-200">{tokenBalance.toFixed(3) || 0} </p>
+          <p className="font-bold text-gray-200">
+            {tokenBalance.toFixed(3) || 0}{" "}
+          </p>
         </div>
       </div>
     </>

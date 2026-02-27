@@ -9,12 +9,11 @@ import { RootState } from "@/src/context/store";
 const OpenOrder = () => {
   const [data, setData] = useState<OpenPosition[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const isChanging = useSelector((state: RootState) => state.order.orderCount);
+  const isChanging = useSelector((state: RootState) => state.order.orderCountStatus);
   const isSocketChanging = useSelector(
     (state: RootState) => state.socket.status,
   );
 
-  console.log(isSocketChanging, "socket status in OpenOrder");
   useEffect(() => {
     const fetchOpenPositions = async () => {
       try {
