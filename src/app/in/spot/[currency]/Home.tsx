@@ -25,7 +25,7 @@ export default function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080/ws");
+    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_WEBSOCKET}`);
     socket.onopen = () => {
       console.log("Connected to WebSocket server");
     };
