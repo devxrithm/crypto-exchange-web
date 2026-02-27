@@ -9,7 +9,7 @@ import { OrderHistory } from "@/src/lib/types";
 const TradeHistory = () => {
   const [data, setData] = useState<OrderHistory[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const isChanging = useSelector((state: RootState) => state.order.orderCount);
+  const isChanging = useSelector((state: RootState) => state.order.orderCountStatus);
   const isSocketChanging = useSelector(
     (state: RootState) => state.socket.status,
   );

@@ -10,7 +10,7 @@ import { ClosePosition } from "@/src/lib/types";
 const OrderHistory = () => {
   const [data, setData] = useState<ClosePosition[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const isChanging = useSelector((state: RootState) => state.order.orderCount);
+  const isChanging = useSelector((state: RootState) => state.order.orderCountStatus);
   const isSocketChanging = useSelector(
     (state: RootState) => state.socket.status,
   );
