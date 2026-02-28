@@ -129,7 +129,7 @@ const Signup = () => {
 
           {error && (
             <div
-              className="flex items-center gap-2 rounded-md px-3 py-2.5 text-xs bg-[hsl(0_72.2%_50.6%_/_0.1)] border border-[hsl(0_72.2%_50.6%_/_0.3)] text-[hsl(0_72.2%_65%)]"
+              className="flex items-center gap-2 rounded-md px-3 py-2.5 text-xs bg-[hsl(0_72.2%_50.6%/0.1)] border border-[hsl(0_72.2%_50.6%/0.3)] text-[hsl(0_72.2%_65%)]"
             >
               <RiLoader2Fill />
               {error}

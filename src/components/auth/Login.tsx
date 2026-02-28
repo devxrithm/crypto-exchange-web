@@ -30,7 +30,9 @@ const Login = () => {
       router.push("/in/spot/btcusdt");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setError(error.response?.data?.message || "Login failed. Please try again.");
+        setError(
+          error.response?.data?.message || "Login failed. Please try again.",
+        );
       } else {
         setError("Something went wrong. Please try again.");
       }
@@ -40,39 +42,25 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-4 bg-black text-slate-50"
-    >
-      <div
-        className="w-full max-w-sm rounded-xl p-8 bg-gray-950 border border-slate-800"
-      >
+    <div className="min-h-screen flex items-center justify-center px-4 bg-black text-slate-50">
+      <div className="w-full max-w-sm rounded-xl p-8 bg-gray-950 border border-slate-800">
         <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg mb-4 bg-slate-50 text-blue-950"
-          >
-           <IoMdLogIn className="text-3xl"/>
-
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg mb-4 bg-slate-50 text-blue-950">
+            <IoMdLogIn className="text-3xl" />
           </div>
-          <h1
-            className="text-xl font-semibold tracking-tight text-slate-50"
-          >
+          <h1 className="text-xl font-semibold tracking-tight text-slate-50">
             Welcome back
           </h1>
-          <p className="text-sm mt-1 text-slate-400">
-            Sign in to your account
-          </p>
+          <p className="text-sm mt-1 text-slate-400">Sign in to your account</p>
         </div>
 
-        <div className="flex flex-col gap-3" >
+        <div className="flex flex-col gap-3">
           <div>
-            <label
-              className="block text-xs font-medium mb-1.5 text-slate-400"
-            >
+            <label className="block text-xs font-medium mb-1.5 text-slate-400">
               Email address
             </label>
-            <div
-              className="flex items-center gap-2.5 rounded-md px-3 py-2.5 transition-colors bg-slate-900 border border-slate-800"
-            >
-              <MdEmail className="text-gray-500"/>
+            <div className="flex items-center gap-2.5 rounded-md px-3 py-2.5 transition-colors bg-slate-900 border border-slate-800">
+              <MdEmail className="text-gray-500" />
               <input
                 type="email"
                 placeholder="you@example.com"
@@ -86,9 +74,7 @@ const Login = () => {
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label
-                className="text-xs font-medium text-slate-400"
-              >
+              <label className="text-xs font-medium text-slate-400">
                 Password
               </label>
               <Link
@@ -98,10 +84,8 @@ const Login = () => {
                 Forgot password?
               </Link>
             </div>
-            <div
-              className="flex items-center gap-2.5 rounded-md px-3 py-2.5 transition-colors bg-slate-900 border border-slate-800"
-            >
-             <MdOutlinePassword />
+            <div className="flex items-center gap-2.5 rounded-md px-3 py-2.5 transition-colors bg-slate-900 border border-slate-800">
+              <MdOutlinePassword />
 
               <input
                 type="password"
@@ -115,9 +99,7 @@ const Login = () => {
           </div>
 
           {error && (
-            <div
-              className="flex items-center gap-2 rounded-md px-3 py-2.5 text-xs bg-[hsl(0_72.2%_50.6%_/_0.1)] border border-[hsl(0_72.2%_50.6%_/_0.3)] text-[hsl(0_72.2%_65%)]"
-            >
+            <div className="flex items-center gap-2 rounded-md px-3 py-2.5 text-xs bg-[hsl(0_72.2%_50.6%/0.1)] border border-[hsl(0_72.2%_50.6%/0.3)] text-[hsl(0_72.2%_65%)]">
               <RiLoader2Fill />
               {error}
             </div>
@@ -135,7 +117,7 @@ const Login = () => {
               </>
             ) : (
               <>
-                <CiLogin className="text-2xl"/>
+                <CiLogin className="text-2xl" />
                 Log in
               </>
             )}
