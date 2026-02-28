@@ -1,15 +1,31 @@
 // components/Providers.tsx
 "use client";
-import { Provider } from "react-redux";
+import { isLoggedIn } from "@/src/context/features/authSlice";
+import type { AppDispatch } from "@/src/context/store";
+import { useEffect } from "react";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "./store";
 
+function AuthHydrator({ payload }: { payload: string | null }) {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(isLoggedIn(payload));
+  }, [dispatch, payload]);
+
+  return null;
+}
+
 export default function Providers({
-  children
+  children,
+  payload,
 }: {
   children: React.ReactNode;
+  payload: string | null;
 }) {
   return (
     <Provider store={store}>
+      <AuthHydrator payload={payload} />
       {children}
     </Provider>
   );

@@ -1,9 +1,9 @@
 "use client";
 
-// import { RootState } from "@/src/context/store";
+import { RootState } from "@/src/context/store";
 import Link from "next/link";
 import { useState } from "react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,13 +14,10 @@ const NavBar = () => {
     { label: "Market", href: "/in/market/btcusdt" },
   ];
 
-  // const isLoggedIn = useSelector(
-  //   (state: RootState) => state.auth.isAuthenticated,
-  // );
-const userToken=true;//useSelector((state: RootState) => state.auth.accessToken);
-  // console.log("User Token in NavBar:", userToken);
-  // const showAuthButtons = !userToken;
-  // console.log("User Token in button:", Boolean(userToken));
+  const isLoggedIn = useSelector((state: RootState) => Boolean(state.auth.data));
+  console.log("isLoggedIn:", isLoggedIn);
+  const showAuthButtons = !isLoggedIn;
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-800 backdrop-blur-xl">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
@@ -49,20 +46,22 @@ const userToken=true;//useSelector((state: RootState) => state.auth.accessToken)
           ))}
         </ul>
 
-        <div className="hidden md:flex items-center gap-2">
-          <Link
-            href="/in/auth/login"
-            className={`px-8 py-1.5 rounded-md text-sm font-medium border border-slate-800 text-white ${userToken ? "block" : "hidden"}`}
-          >
-            Login
-          </Link>
-          <Link
-            href="/in/auth/signup"
-            className={`px-6 py-1.5 rounded-md text-sm font-semibold hover:opacity-90  bg-slate-50 text-black ${userToken ? "block" : "hidden"}`}
-          >
-            Sign Up
-          </Link>
-        </div>
+        {showAuthButtons && (
+          <div className="hidden md:flex items-center gap-2">
+            <Link
+              href="/in/auth/login"
+              className="px-8 py-1.5 rounded-md text-sm font-medium border border-slate-800 text-white"
+            >
+              Login
+            </Link>
+            <Link
+              href="/in/auth/signup"
+              className="px-6 py-1.5 rounded-md text-sm font-semibold hover:opacity-90  bg-slate-50 text-black"
+            >
+              Sign Up
+            </Link>
+          </div>
+        )}
 
         <button
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 shrink-0"
@@ -98,22 +97,24 @@ const userToken=true;//useSelector((state: RootState) => state.auth.accessToken)
           ))}
         </ul>
 
-        <div className="flex flex-col gap-2 px-4 pt-3 pb-4 border-t border-slate-800">
-          <Link
-            href="/in/auth/login"
-            onClick={() => setMenuOpen(false)}
-            className={`w-full text-center py-2.5 rounded-md text-sm font-medium transition-colors border border-slate-800 text-slate-400 ${userToken ? "block" : "hidden"}`}
-          >
-            Login
-          </Link>
-          <Link
-            href="/in/auth/signup"
-            onClick={() => setMenuOpen(false)}
-            className={`w-full text-center py-2.5 rounded-md text-sm font-semibold hover:opacity-90 transition-opacity bg-slate-50 text-blue-950 ${userToken ? "block" : "hidden"}`}
-          >
-            Sign Up
-          </Link>
-        </div>
+        {showAuthButtons && (
+          <div className="flex flex-col gap-2 px-4 pt-3 pb-4 border-t border-slate-800">
+            <Link
+              href="/in/auth/login"
+              onClick={() => setMenuOpen(false)}
+              className="w-full text-center py-2.5 rounded-md text-sm font-medium transition-colors border border-slate-800 text-slate-400"
+            >
+              Login
+            </Link>
+            <Link
+              href="/in/auth/signup"
+              onClick={() => setMenuOpen(false)}
+              className="w-full text-center py-2.5 rounded-md text-sm font-semibold hover:opacity-90 transition-opacity bg-slate-50 text-blue-950"
+            >
+              Sign Up
+            </Link>
+          </div>
+        )}
       </div>
     </header>
   );

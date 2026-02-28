@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-// import { cookies } from "next/headers";
+import { cookies } from "next/headers";
 import NavBar from "../components/dashboard/NavBar";
 import "./globals.css";
 import Providers from "../context/Provider";
@@ -25,15 +25,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const cookieStore = await cookies();
-  // const initialIsAuthenticate = cookieStore.get("accessToken")?.value ?? null;
+  const cookieStore = await cookies();
+  const initialAuthToken = cookieStore.get("accessToken")?.value ?? null;
 
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
+        <Providers payload={initialAuthToken}>
           <NavBar />
           {children}
         </Providers>
