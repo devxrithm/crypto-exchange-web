@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import NavBar from "../components/dashboard/NavBar";
-import Providers from "../context/Provider";
 import "./globals.css";
+import Providers from "../context/Provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,15 +25,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const initialIsAuthenticate = cookieStore.get("accessToken")?.value ?? null;
-  console.log("Initial auth state from cookies:", initialIsAuthenticate);
+  // const cookieStore = await cookies();
+  // const initialIsAuthenticate = cookieStore.get("accessToken")?.value ?? null;
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers cookieToken={initialIsAuthenticate}>
+        <Providers>
           <NavBar />
           {children}
         </Providers>

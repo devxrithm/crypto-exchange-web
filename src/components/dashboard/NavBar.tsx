@@ -1,9 +1,9 @@
 "use client";
 
-import { RootState } from "@/src/context/store";
+// import { RootState } from "@/src/context/store";
 import Link from "next/link";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,8 +17,7 @@ const NavBar = () => {
   // const isLoggedIn = useSelector(
   //   (state: RootState) => state.auth.isAuthenticated,
   // );
-  const userToken = useSelector((state: RootState) => state.auth.data);
-  console.log("token", userToken);
+const userToken=true;//useSelector((state: RootState) => state.auth.accessToken);
   // console.log("User Token in NavBar:", userToken);
   // const showAuthButtons = !userToken;
   // console.log("User Token in button:", Boolean(userToken));
@@ -53,13 +52,13 @@ const NavBar = () => {
         <div className="hidden md:flex items-center gap-2">
           <Link
             href="/in/auth/login"
-            className={`px-8 py-1.5 rounded-md text-sm font-medium border border-slate-800 text-white ${!userToken ? "block" : "hidden"}`}
+            className={`px-8 py-1.5 rounded-md text-sm font-medium border border-slate-800 text-white ${userToken ? "block" : "hidden"}`}
           >
             Login
           </Link>
           <Link
             href="/in/auth/signup"
-            className={`px-6 py-1.5 rounded-md text-sm font-semibold hover:opacity-90  bg-slate-50 text-black ${!userToken ? "block" : "hidden"}`}
+            className={`px-6 py-1.5 rounded-md text-sm font-semibold hover:opacity-90  bg-slate-50 text-black ${userToken ? "block" : "hidden"}`}
           >
             Sign Up
           </Link>
@@ -103,14 +102,14 @@ const NavBar = () => {
           <Link
             href="/in/auth/login"
             onClick={() => setMenuOpen(false)}
-            className={`w-full text-center py-2.5 rounded-md text-sm font-medium transition-colors border border-slate-800 text-slate-400 ${!userToken ? "block" : "hidden"}`}
+            className={`w-full text-center py-2.5 rounded-md text-sm font-medium transition-colors border border-slate-800 text-slate-400 ${userToken ? "block" : "hidden"}`}
           >
             Login
           </Link>
           <Link
             href="/in/auth/signup"
             onClick={() => setMenuOpen(false)}
-            className={`w-full text-center py-2.5 rounded-md text-sm font-semibold hover:opacity-90 transition-opacity bg-slate-50 text-blue-950 ${!userToken ? "block" : "hidden"}`}
+            className={`w-full text-center py-2.5 rounded-md text-sm font-semibold hover:opacity-90 transition-opacity bg-slate-50 text-blue-950 ${userToken ? "block" : "hidden"}`}
           >
             Sign Up
           </Link>

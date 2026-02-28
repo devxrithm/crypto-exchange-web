@@ -9,7 +9,7 @@ export default async function ProtectedLayout({
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
 
-  if (!token) redirect("/in/auth/login");
+  if (token) redirect("/in/spot/btcusdt");
 
   return <>{children}</>;
 }
