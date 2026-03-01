@@ -1,15 +1,21 @@
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+"use client";
+import { useRouter } from "next/navigation";
+import { api } from "@/src/lib/axios";
+import { useEffect } from "react";
 
-export default async function ProtectedLayout({
+export default function ProtectedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("accessToken")?.value;
-
-  if (!token) redirect("/in/auth/login");
+  const router = useRouter();
+  useEffect(() => {
+    const verifyToken = async () => {
+      const res = await api.post("/api/auth/verify-token");
+      if (!res.data.data) router.push("/in/auth/login");
+    };
+    verifyToken();
+  }, [router]);
 
   return <>{children}</>;
 }
