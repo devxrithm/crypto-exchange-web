@@ -10,7 +10,10 @@ function AuthHydrator({ payload }: { payload: string | null }) {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(isLoggedIn(payload));
+    console.log("AuthHydrator payload:", Boolean(payload),payload);
+    if (Boolean(payload) === true) {
+      dispatch(isLoggedIn());
+    }
   }, [dispatch, payload]);
 
   return null;
