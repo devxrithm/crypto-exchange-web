@@ -203,57 +203,6 @@ const page = () => {
         </div>
       </section>
 
-      <section className="py-16 px-6 border-t border-slate-800">
-        <div className="max-w-5xl mx-auto rounded-lg p-8 md:p-12 bg-slate-950 border border-slate-800">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <p className="text-xs font-medium mb-3 text-slate-600">
-                SECURITY FIRST
-              </p>
-              <h2 className="text-2xl font-bold tracking-tight mb-3 text-slate-50">
-                Your assets,
-                <br />
-                fully protected.
-              </h2>
-              <p className="text-sm leading-relaxed text-slate-400">
-                We hold 95% of user funds in offline cold wallets, backed by a
-                $350M insurance fund and audited by top security firms.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                {
-                  label: "Cold Storage",
-                  val: "95%",
-                  desc: "of assets offline",
-                },
-                {
-                  label: "Insurance Fund",
-                  val: "$350M",
-                  desc: "user protection",
-                },
-                { label: "Uptime", val: "99.9%", desc: "platform reliability" },
-                {
-                  label: "Security Audits",
-                  val: "Quarterly",
-                  desc: "by top firms",
-                },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-md p-4 bg-slate-900 border border-slate-800"
-                >
-                  <p className="font-bold text-sm text-slate-50">{item.val}</p>
-                  <p className="text-xs font-medium mt-0.5 text-slate-400">
-                    {item.label}
-                  </p>
-                  <p className="text-xs mt-0.5 text-slate-600">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       <footer className="px-6 py-10 mt-10 border-t border-slate-800">
         <div className="max-w-5xl mx-auto">
@@ -270,18 +219,14 @@ const page = () => {
             <div className="flex flex-wrap items-center justify-center gap-6 text-white">
               <p className="">About Us</p>
               <p className="">Contact</p>
-              <p className="">Terms of Service</p>
-              <p className="">Privacy Policy</p>
-              <p className=""></p>
             </div>
           </div>
 
           <div className="flex flex-col md:flex-row items-center justify-between gap-3 pt-6 text-xs border-t border-slate-800 text-slate-600">
             <p>
-              © {new Date().getFullYear()} CryptoExchange Inc. All rights
+              © 2026 CryptoExchange Inc. All rights
               reserved.
             </p>
-            <p>Regulated · Insured · SOC 2 Certified</p>
           </div>
         </div>
       </footer>
