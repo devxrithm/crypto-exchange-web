@@ -19,7 +19,7 @@ const TradeHistory = () => {
       try {
         const res = await api.get("/api/order-history");
         setData(res.data.data);
-        console.log(res.data)
+        console.log(res.data);
       } catch (err) {
         if (axios.isAxiosError(err)) {
           setError(err.response?.data?.message || "Failed to load orders");
@@ -33,67 +33,63 @@ const TradeHistory = () => {
   }, [isChanging, isSocketChanging]);
 
   return (
-
-
-    <table className="w-full px-5 text-sm mt-5">
-      <thead>
-        <tr className="text-gray-500 text-center">
-          <th className="min-w-28">ASSET</th>
-          <th className="min-w-28">Traded QTY</th>
-          <th className="min-w-28">Execution Price</th>
-          <th className="min-w-28">Order Amount</th>
-          <th className="min-w-34">Trade Id</th>
-          <th className="min-w-28">Order Type</th>
-          <th className="min-w-28">Status</th>
-          <th className="min-w-28">Side</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {data.length === 0 && !error && (
-          <tr>
-            <td colSpan={7} className="text-center py-6 text-gray-500">
-              No open positions
-            </td>
+    <div className="w-full overflow-x-auto mt-5">
+      <table className="w-full min-w-[700px] px-5 text-sm">
+        <thead>
+          <tr className="text-gray-500 text-center">
+            <th className="min-w-28">ASSET</th>
+            <th className="min-w-28">Traded QTY</th>
+            <th className="min-w-28">Execution Price</th>
+            <th className="min-w-28">Order Amount</th>
+            <th className="min-w-34">Trade Id</th>
+            <th className="min-w-28">Order Type</th>
+            <th className="min-w-28">Status</th>
+            <th className="min-w-28">Side</th>
           </tr>
-        )}
-        <tr
+        </thead>
 
-          className="text-gray-300 text-center  text-sm "
-        >
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-
-        </tr>
-        {data.map((order) => (
-          <tr
-            key={order.orderId}
-            className="text-gray-300 text-center bg-[#12161b] text-sm "
-          >
-            <td className="py-3">{order.currencyPair}</td>
-            <td className="py-3">{Number(order.tradedQuantity).toFixed(6)}</td>
-            <td className="py-3">{order.executionPrice}</td>
-            <td className="py-3">{order.orderAmount}</td>
-            <td className="py-3">{order._id}</td>
-            <td className="py-3">Market</td>
-            <td className="py-3">{order.status}</td>
-            <td className="py-3">BUY</td>
-            <td
-              className={`py-3 ${order.orderSide === "BUY" ? "text-green-400" : "text-red-400"
-                }`}
+        <tbody>
+          {data.length === 0 && !error && (
+            <tr>
+              <td colSpan={8} className="text-center py-6 text-gray-500">
+                No open positions
+              </td>
+            </tr>
+          )}
+          <tr className="text-gray-300 text-center text-sm">
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+          </tr>
+          {data.map((order) => (
+            <tr
+              key={order.orderId}
+              className="text-gray-300 text-center bg-[#12161b] text-sm"
             >
-              {order.orderSide}
-            </td>
-          </tr>
-        ))}
-
-      </tbody>
-    </table>
+              <td className="py-3">{order.currencyPair}</td>
+              <td className="py-3">{Number(order.tradedQuantity).toFixed(6)}</td>
+              <td className="py-3">{order.executionPrice}</td>
+              <td className="py-3">{order.orderAmount}</td>
+              <td className="py-3">{order._id}</td>
+              <td className="py-3">Market</td>
+              <td className="py-3">{order.status}</td>
+              <td
+                className={`py-3 ${
+                  order.orderSide === "BUY" ? "text-green-400" : "text-red-400"
+                }`}
+              >
+                {order.orderSide}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

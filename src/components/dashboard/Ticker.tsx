@@ -44,7 +44,7 @@ const Ticker = ({ token }: TickerProps) => {
   }, [token]);
 
   return (
-    <div className="w-[73%] text-xl flex justify-around items-center">
+    <div className="w-full text-xl mx-3 flex justify-around items-center gap-3 lg:gap-2">
       <div className="font-semibold text-gray-100 text-2xl">
         {ticker?.s}
       </div>
@@ -59,21 +59,29 @@ const Ticker = ({ token }: TickerProps) => {
         <span className="text-gray-600 text-xs">Open Price</span>
         <span className="text-sm text-white" >{ticker?.o}</span>
       </div>
-      <div className="flex flex-col">
-        <span className="text-gray-600 text-xs">24h High</span>
-        <span className="text-sm text-white" >{ticker?.h}</span>
+      <div className="hidden lg:block">
+        <div className="flex flex-col">
+          <span className="text-gray-600 text-xs">24h High</span>
+          <span className="text-sm text-white" >{ticker?.h}</span>
+        </div>
       </div>
-      <div className="flex flex-col">
-        <span className="text-gray-600 text-xs">24h Low</span>
-        <span className="text-sm text-white" >{ticker?.l}</span>
+      <div className="hidden lg:block">
+        <div className="flex flex-col">
+          <span className="text-gray-600 text-xs">24h Low</span>
+          <span className="text-sm text-white" >{ticker?.l}</span>
+        </div>
       </div>
-      <div className="flex flex-col">
-        <span className="text-gray-600 text-xs">24h Vol(BTC)</span>
-        <span className="text-sm text-white" >{ticker?.v}</span>
+      <div className="hidden lg:block">
+        <div className="flex flex-col">
+          <span className="text-gray-600 text-xs">24h Vol(BTC)</span>
+          <span className="text-sm text-white" >{ticker?.v}</span>
+        </div>
       </div>
-      <div className="flex flex-col">
-        <span className="text-gray-600 text-xs">24h Vol(USDT)</span>
-        <span className="text-sm text-white" >{ticker?.q}</span>
+      <div className="hidden lg:block">
+        <div className="flex flex-col">
+          <span className="text-gray-600 text-xs">24h Vol(USDT)</span>
+          <span className="text-sm text-white" >{ticker?.q}</span>
+        </div>
       </div>
     </div>
   );

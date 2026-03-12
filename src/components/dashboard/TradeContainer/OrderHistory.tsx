@@ -31,64 +31,64 @@ const OrderHistory = () => {
 
     fetchClosePositions();
   }, [isChanging, isSocketChanging]);
-  console.log(data)
+
+  console.log(data);
+
   return (
-    <table className="w-full px-5 text-sm mt-5">
-      <thead>
-        <tr className="text-gray-500 text-center">
-          <th className="min-w-28">ASSET</th>
-          <th className="min-w-28">Qty</th>
-          <th className="min-w-28">Entry Price</th>
-          <th className="min-w-34">Order Id</th>
-          <th className="min-w-28">Order Type</th>
-          <th className="min-w-28">Status</th>
-          <th className="min-w-28">Side</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {data.length === 0 && !error && (
-          <tr>
-            <td colSpan={7} className="text-center py-6 text-gray-500">
-              No open positions
-            </td>
+    <div className="w-full overflow-x-auto mt-5">
+      <table className="w-full min-w-[600px] px-5 text-sm">
+        <thead>
+          <tr className="text-gray-500 text-center">
+            <th className="min-w-28">ASSET</th>
+            <th className="min-w-28">Qty</th>
+            <th className="min-w-28">Entry Price</th>
+            <th className="min-w-34">Order Id</th>
+            <th className="min-w-28">Order Type</th>
+            <th className="min-w-28">Status</th>
+            <th className="min-w-28">Side</th>
           </tr>
-        )}
-        <tr
-          key="spacer"
-          className="text-gray-300 text-center  text-sm "
-        >
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
-          <td className="py-1"></td>
+        </thead>
 
-        </tr>
-        {data.map((order) => (
-          <tr
-            key={order.orderId}
-            className="text-gray-300 text-center bg-[#12161b] text-sm "
-          >
-            <td className="py-3">{order.currencyPair}</td>
-            <td className="py-3">{Number(order.orderQuantity).toFixed(6)}</td>
-            <td className="py-3">{order.entryPrice}</td>
-            <td className="py-3">{order.orderId}</td>
-            <td className="py-3">{order.orderType}</td>
-            <td className="py-3">{order.positionStatus}</td>
-            <td
-              className={`py-3 ${order.orderSide === "BUY" ? "text-green-400" : "text-red-400"
-                }`}
+        <tbody>
+          {data.length === 0 && !error && (
+            <tr>
+              <td colSpan={7} className="text-center py-6 text-gray-500">
+                No open positions
+              </td>
+            </tr>
+          )}
+          <tr key="spacer" className="text-gray-300 text-center text-sm">
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+            <td className="py-1"></td>
+          </tr>
+          {data.map((order) => (
+            <tr
+              key={order.orderId}
+              className="text-gray-300 text-center bg-[#12161b] text-sm"
             >
-              {order.orderSide}
-            </td>
-          </tr>
-        ))}
-
-      </tbody>
-    </table>
+              <td className="py-3">{order.currencyPair}</td>
+              <td className="py-3">{Number(order.orderQuantity).toFixed(6)}</td>
+              <td className="py-3">{order.entryPrice}</td>
+              <td className="py-3">{order.orderId}</td>
+              <td className="py-3">{order.orderType}</td>
+              <td className="py-3">{order.positionStatus}</td>
+              <td
+                className={`py-3 ${
+                  order.orderSide === "BUY" ? "text-green-400" : "text-red-400"
+                }`}
+              >
+                {order.orderSide}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

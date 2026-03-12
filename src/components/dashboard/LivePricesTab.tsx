@@ -11,7 +11,7 @@ interface MarkPrice {
 }
 
 const formatPrice = (price: number): string => {
-  if (price >= 1000) return price.toFixed(2)
+  if (price >= 1000) return price.toFixed(2);
   if (price >= 1) return price.toFixed(4);
   return price.toFixed(6);
 };
@@ -52,24 +52,25 @@ const LivePrices = () => {
     return () => ws.close();
   }, []);
 
-  //for searching
   const filtered = search
     ? sortedPrices.filter((item) =>
-      item.s.toLowerCase().includes(search.toLowerCase())
-    )
+        item.s.toLowerCase().includes(search.toLowerCase())
+      )
     : sortedPrices;
 
   return (
-    <div className="py-4 text-white mt-2 rounded-sm bg-[#0b0e11] w-68">
+    <div className="py-4 text-white mt-2 rounded-sm bg-[#0b0e11] w-full xl:w-68">
       <div className="flex items-center justify-between mx-3 mb-2">
         <h1 className="text-sm font-medium text-slate-50">Asset Prices</h1>
         <span
-          className={`flex items-center gap-1.5 text-xs ${connected ? "text-green-500" : "text-slate-500"
-            }`}
+          className={`flex items-center gap-1.5 text-xs ${
+            connected ? "text-green-500" : "text-slate-500"
+          }`}
         >
           <span
-            className={`w-1.5 h-1.5 rounded-full ${connected ? "bg-green-500 animate-pulse" : "bg-slate-500"
-              }`}
+            className={`w-1.5 h-1.5 rounded-full ${
+              connected ? "bg-green-500 animate-pulse" : "bg-slate-500"
+            }`}
           />
           {connected ? "Live" : "Connecting…"}
         </span>
@@ -87,8 +88,8 @@ const LivePrices = () => {
         />
       </div>
 
-      <div className="max-h-90 overflow-y-auto">
-        <table className="w-full text-xs">
+      <div className="max-h-90 overflow-y-auto overflow-x-auto">
+        <table className="w-full min-w-[200px] text-xs">
           <thead className="sticky top-0 z-10 bg-black">
             <tr className="text-slate-500">
               <th className="px-3 py-1.5 text-left font-medium min-w-24">
@@ -111,26 +112,24 @@ const LivePrices = () => {
                 </td>
               </tr>
             ) : (
-              filtered.map((item) => {
-                return (
-                  <tr
-                    key={item.s}
-                    className="border-b border-slate-900 hover:bg-slate-900/50 transition-colors"
-                  >
-                    <td className="px-3 py-2 text-slate-50 font-medium">
-                      <Link
-                        href={`/in/spot/${item.s.toLowerCase()}`}
-                        className="text-slate-200 hover:text-emerald-400 transition-colors font-medium"
-                      >
-                        {item.s}
-                      </Link>
-                    </td>
-                    <td className={`px-3 py-2 text-right font-mono text-slate-300`}>
-                      {formatPrice(Number(item.p))}
-                    </td>
-                  </tr>
-                );
-              })
+              filtered.map((item) => (
+                <tr
+                  key={item.s}
+                  className="border-b border-slate-900 hover:bg-slate-900/50 transition-colors"
+                >
+                  <td className="px-3 py-2 text-slate-50 font-medium">
+                    <Link
+                      href={`/in/spot/${item.s.toLowerCase()}`}
+                      className="text-slate-200 hover:text-emerald-400 transition-colors font-medium"
+                    >
+                      {item.s}
+                    </Link>
+                  </td>
+                  <td className="px-3 py-2 text-right font-mono text-slate-300">
+                    {formatPrice(Number(item.p))}
+                  </td>
+                </tr>
+              ))
             )}
           </tbody>
         </table>

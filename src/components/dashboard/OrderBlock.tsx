@@ -74,15 +74,15 @@ const OrderBlock = () => {
   return (
     <>
       {state === "BUY" ? (
-        <div className="min-w-[32%] py-5 px-3 text-white bg-[#0b0e11] mt-2">
+        <div className="w-full py-5 px-3 text-white bg-[#0b0e11] mt-2">
           <h1 className="">Exchange / Spot</h1>
           <hr className="text-gray-700 mt-1" />
           <div className="text-white text-xs flex justify-around items-center border border-gray-700 mt-5 rounded-sm">
-            <div className="bg-gray-800 py-3 px-16 rounded-l-sm cursor-pointer">
+            <div className="bg-gray-800 py-3 flex-1 text-center rounded-l-sm cursor-pointer">
               BUY
             </div>
-            <button onClick={() => setState("SELL")} className="cursor-pointer">
-              <div className=" py-3 px-16 rounded-r-sm">SELL</div>
+            <button onClick={() => setState("SELL")} className="flex-1 cursor-pointer">
+              <div className="py-3 text-center rounded-r-sm">SELL</div>
             </button>
           </div>
           <div className="flex gap-5 mt-2">
@@ -96,15 +96,15 @@ const OrderBlock = () => {
               <p className="font-semibold p-3">Market Price</p>
             </div>
 
-            <div className="border border-gray-400 flex justify-around items-center r`ounded-sm text-xs focus-within:border focus-within:border-emerald-400 mt-3">
+            <div className="border border-gray-400 flex justify-between items-center rounded-sm text-xs focus-within:border focus-within:border-emerald-400 mt-3">
               <input
                 type="number"
                 placeholder="Total"
-                className="p-3 text-gray-300 outline-none w-64"
+                className="p-3 text-gray-300 outline-none w-full min-w-0"
                 value={amount}
                 onChange={(e) => setAmount(Number(e.target.value))}
               />
-              <p className="text-white font-semibold p-3">USDT</p>
+              <p className="text-white font-semibold p-3 shrink-0">USDT</p>
             </div>
           </div>
 
@@ -133,14 +133,14 @@ const OrderBlock = () => {
           </div>
         </div>
       ) : (
-        <div className="w-[32%] py-5 px-3 text-white bg-[#0b0e11] mt-2">
+        <div className="w-full py-5 px-3 text-white bg-[#0b0e11] mt-2">
           <h1 className="">Exchange / Spot</h1>
           <hr className="text-gray-700 mt-1" />
           <div className="text-white text-xs flex justify-around items-center border border-gray-700 mt-5 rounded-sm">
-            <button onClick={() => setState("BUY")} className="cursor-pointer">
-              <div className="py-3 px-16 rounded-l-sm">BUY</div>
+            <button onClick={() => setState("BUY")} className="flex-1 cursor-pointer">
+              <div className="py-3 text-center rounded-l-sm">BUY</div>
             </button>
-            <div className="bg-gray-800  py-3 px-16 rounded-r-sm cursor-pointer">
+            <div className="bg-gray-800 flex-1 text-center py-3 rounded-r-sm cursor-pointer">
               SELL
             </div>
           </div>
@@ -155,15 +155,15 @@ const OrderBlock = () => {
               <p className="font-semibold p-3">Market Price</p>
             </div>
 
-            <div className="border border-gray-400 flex justify-around items-center rounded-sm text-xs focus-within:border focus-within:border-red-400 mt-3">
+            <div className="border border-gray-400 flex justify-between items-center rounded-sm text-xs focus-within:border focus-within:border-red-400 mt-3">
               <input
                 type="number"
                 placeholder="Total"
-                className="p-3 text-gray-300 outline-none w-64"
+                className="p-3 text-gray-300 outline-none w-full min-w-0"
                 value={qty}
                 onChange={(e) => setQty(Number(e.target.value))}
               />
-              <p className="text-white font-semibold p-3">USDT</p>
+              <p className="text-white font-semibold p-3 shrink-0">USDT</p>
             </div>
           </div>
 
@@ -197,7 +197,5 @@ const OrderBlock = () => {
     </>
   );
 };
-export const message = () => {
-  return String(success);
-};
+
 export default OrderBlock;

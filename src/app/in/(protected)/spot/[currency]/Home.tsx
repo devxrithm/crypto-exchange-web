@@ -21,7 +21,6 @@ export default function Home() {
     "OPEN_ORDER" | "ORDER_HISTORY" | "TRADE_HISTORY" | "HOLDING"
   >("OPEN_ORDER");
 
-  //add context for socket status
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,7 +52,6 @@ export default function Home() {
       console.log("WebSocket connection closed");
     };
 
-    // Cleanup on unmount
     return () => {
       socket.close();
     };
@@ -61,33 +59,46 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex justify-between items-center mt-5 px-3">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-center w-full mt-5 px-1 gap-3">
         <Ticker token={String(params.currency)} />
-        <WalletContainer />
+        <div className="shrink-0">
+          <WalletContainer />
+        </div>
       </div>
       <hr className="text-gray-700 mt-2" />
-      <div className="flex justify-evenly ">
-        <div className="flex flex-col mx-3">
-          <Orderbook />
+      <div className="flex flex-col xl:flex-row xl:justify-around">
+        <div className="flex flex-col mx-3 xl:mx-3">
+          <div className="lg:block hidden">
+            <Orderbook />
+          </div>
           <hr className="text-gray-700 mt-2" />
-          <LivePrices />
+          <div className="lg:block hidden">
+            <LivePrices />
+          </div>
         </div>
-        <div className="border-r border-r-gray-600 h-202"></div>
-        <div className="mx-2">
-          <div className="flex justify-around gap-3">
-            <div className="min-w-[60%]">
+
+        <div className="hidden xl:block border-r border-r-gray-600 h-202"></div>
+        <div className="mx-2 flex-1 min-w-0">
+          <div className="flex flex-col lg:flex-row lg:justify-around lg:gap-3">
+            {/* Chart — full width on mobile, min 50% on lg+ */}
+            <div className="w-full lg:min-w-[50%] flex justify-center">
               <TradingViewWidget symbol={"btcusdt"} />
             </div>
-            <div className="border-r border-r-gray-600 h-106"></div>
-            <OrderBlock />
+
+            <div className="hidden lg:block border-r border-r-gray-600 h-106"></div>
+
+            <div className="w-full lg:w-[50%] lg:min-w-0 lg:max-w-full">
+              <OrderBlock />
+            </div>
           </div>
+
           <hr className="text-gray-700 mt-2" />
 
           <div className="w-full text-white mt-2 bg-[#0b0e11] rounded-sm p-5 mb-5 min-h-92">
-            <div className="flex gap-5 text-sm font-semibold text-gray-400">
+            <div className="flex flex-wrap gap-4 text-sm font-semibold text-gray-400">
               <button
                 onClick={() => setActiveTab("OPEN_ORDER")}
-                className={activeTab === "OPEN_ORDER" ? "text-white " : ""}
+                className={activeTab === "OPEN_ORDER" ? "text-white" : ""}
               >
                 <p className="cursor-pointer">Open Order</p>
               </button>
@@ -101,19 +112,14 @@ export default function Home() {
 
               <button
                 onClick={() => setActiveTab("TRADE_HISTORY")}
-                className={
-                  activeTab === "TRADE_HISTORY"
-                    ? "text-white cursor-pointer"
-                    : ""
-                }
+                className={activeTab === "TRADE_HISTORY" ? "text-white cursor-pointer" : ""}
               >
                 <p className="cursor-pointer">Trade History</p>
               </button>
+
               <button
                 onClick={() => setActiveTab("HOLDING")}
-                className={
-                  activeTab === "HOLDING" ? "text-white cursor-pointer" : ""
-                }
+                className={activeTab === "HOLDING" ? "text-white cursor-pointer" : ""}
               >
                 <p className="cursor-pointer">Holding</p>
               </button>
@@ -125,8 +131,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+
       {messages && (
-        <div className="fixed border-b-4 min-w-64 justify-center top-[90%] left-[90%] -translate-x-1/2 z-50 bg-emerald-500 text-white px-2 py-5 rounded-lg shadow-lg flex items-center gap-3 animate-fade-in">
+        <div className="fixed border-b-4 min-w-64 justify-center bottom-6 right-4 sm:top-[90%] sm:left-[90%] sm:-translate-x-1/2 z-50 bg-emerald-500 text-white px-2 py-5 rounded-lg shadow-lg flex items-center gap-3 animate-fade-in">
           <span className="text-sm font-semibold">{messages}</span>
           <button
             onClick={() => setMessages(null)}
