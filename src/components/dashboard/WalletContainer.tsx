@@ -12,8 +12,8 @@ const WalletContainer = () => {
   const param = useParams();
   const asset = String(param.currency).toUpperCase().replace("USDT", "");
 
-  const [balance, setBalance] = useState(0);
-  const [tokenBalance, setTokenBalance] = useState(0);
+  const [balance, setBalance] = useState<number>(0);
+  const [tokenBalance, setTokenBalance] = useState<number>(0);
   const [error, setError] = useState("");
 
   const isSocketChanging = useSelector(

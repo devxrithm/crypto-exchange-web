@@ -1,20 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { TickerData, TickerProps } from "@/src/lib/types";
 
-interface TickerData {
-  s: string;   // Symbol
-  c: string;   // Last price
-  p: string;   // Price change
-  P: string;   // Price change percent
-  h: string;   // High price
-  l: string;   // Low price
-  v: string;  // Volume
-  q: string   // Total traded base asset volume
-  o: string
-}
-
-interface TickerProps {
-  token: string;
-}
 
 const Ticker = ({ token }: TickerProps) => {
   const [ticker, setTicker] = useState<TickerData | null>(null);

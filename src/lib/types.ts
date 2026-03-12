@@ -50,3 +50,19 @@ export interface ClosePosition {
     itemSize: string;
     theme: string
   }
+
+  export interface TickerData {
+    s: string;   // Symbol
+    c: string;   // Last price
+    p: string;   // Price change
+    P: string;   // Price change percent
+    h: string;   // High price
+    l: string;   // Low price
+    v: string;  // Volume
+    q: string   // Total traded base asset volume
+    o: string
+  }
+
+  export interface TickerProps {
+    token: string;
+  }
