@@ -63,7 +63,6 @@ const page = () => {
 
   return (
     <div className="min-h-screen font-sans text-sm mt-2 bg-black">
-      ..
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center opacity-10 bg-[url('/close-up-hand-bitcoin-concept.jpg')]" />
 
