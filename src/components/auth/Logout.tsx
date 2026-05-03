@@ -2,6 +2,8 @@
 
 import { api } from "@/src/lib/axios";
 import { logout } from "@/src/context/features/authSlice";
+import { resetWalletChange } from "@/src/context/features/walletSlice";
+import { resetOrderChange } from "@/src/context/features/orderSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -15,10 +17,18 @@ const Logout = () => {
   const LogoutHandler = async () => {
     try {
       await api.post("/api/auth/logout");
+      // Clear all Redux state
       dispatch(logout());
+      dispatch(resetWalletChange());
+      dispatch(resetOrderChange());
+      // Redirect to login
       router.push("/in/auth/login");
     } catch (error) {
+      // Clear all Redux state even on error
       dispatch(logout());
+      dispatch(resetWalletChange());
+      dispatch(resetOrderChange());
+      // Redirect to login
       router.push("/in/auth/login");
       if (axios.isAxiosError(error)) {
         setError(
