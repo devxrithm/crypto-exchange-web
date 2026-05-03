@@ -15,12 +15,14 @@ const Logout = () => {
   const LogoutHandler = async () => {
     try {
       await api.post("/api/auth/logout");
-      router.push("/in/auth/login");
       dispatch(logout());
+      router.push("/in/auth/login");
     } catch (error) {
+      dispatch(logout());
+      router.push("/in/auth/login");
       if (axios.isAxiosError(error)) {
         setError(
-          error.response?.data?.message || "Login failed. Please try again.",
+          error.response?.data?.message || "Logout failed. Please try again.",
         );
       } else {
         setError("Something went wrong. Please try again.");
